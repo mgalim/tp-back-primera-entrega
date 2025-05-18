@@ -1,0 +1,10 @@
+doctype html 
+html 
+    head 
+        title Prueba de pug
+    body
+        h1 Datos desde el backend 
+        p #{text}
+        ul
+            each item in data
+                li #{item.name} #{item.lastname} #{item.age} #{item.city}
