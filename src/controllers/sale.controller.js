@@ -1,24 +1,13 @@
 import BaseController from './base.controller.js';
 import { Sale } from '../models/sale.js';
 
-/**
- * Controlador para gestionar las ventas
- * @extends BaseController
- */
+
 class SaleController extends BaseController {
   constructor() {
     super(Sale, ['products.product']);
   }
 
-  /**
-   * Obtiene ventas por rango de fechas
-   * @param {Request} req - Objeto de solicitud Express
-   * @param {Response} res - Objeto de respuesta Express
-   * @param {Object} req.query - Parámetros de consulta
-   * @param {string} [req.query.startDate] - Fecha inicial (YYYY-MM-DD)
-   * @param {string} [req.query.endDate] - Fecha final (YYYY-MM-DD)
-   * @returns {Promise<Response>} Lista de ventas filtradas por fecha
-   */
+
   async getByDate(req, res) {
     try {
       const { startDate, endDate } = req.query;
@@ -46,12 +35,7 @@ class SaleController extends BaseController {
     }
   }
 
-  /**
-   * Calcula el total de todas las ventas
-   * @param {Request} req - Objeto de solicitud Express
-   * @param {Response} res - Objeto de respuesta Express
-   * @returns {Promise<Response>} Total acumulado de ventas
-   */
+
   async getTotalSales(req, res) {
     try {
       const sales = await this.model.find();
@@ -64,12 +48,7 @@ class SaleController extends BaseController {
     }
   }
 
-  /**
-   * Obtiene los 10 productos más vendidos
-   * @param {Request} req - Objeto de solicitud Express
-   * @param {Response} res - Objeto de respuesta Express
-   * @returns {Promise<Response>} Lista de productos top con cantidad y revenue
-   */
+
   async getTopProducts(req, res) {
     try {
       const result = await this.model.aggregate([
@@ -101,14 +80,7 @@ class SaleController extends BaseController {
     }
   }
 
-  /**
-   * Obtiene ventas agrupadas por período (semana/mes)
-   * @param {Request} req - Objeto de solicitud Express
-   * @param {Response} res - Objeto de respuesta Express
-   * @param {Object} req.query - Parámetros de consulta
-   * @param {('week'|'month')} req.query.period - Período de agrupación
-   * @returns {Promise<Response>} Ventas agrupadas por período
-   */
+
   async getSalesByPeriod(req, res) {
     try {
       const { period } = req.query;

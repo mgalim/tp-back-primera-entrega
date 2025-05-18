@@ -1,19 +1,11 @@
-/**
- * Controlador base que proporciona operaciones CRUD genéricas
- * @param {mongoose.Model} model - El modelo de Mongoose a utilizar
- */
+
 class BaseController {
   constructor(model, populateFields = []) {
     this.model = model;
     this.populateFields = populateFields;
   }
 
-  /**
-   * Obtiene todos los registros
-   * @param {Request} req - Objeto de solicitud Express
-   * @param {Response} res - Objeto de respuesta Express
-   * @returns {Promise<Response>} Array de documentos
-   */
+
   async getAll(req, res) {
     try {
       const items = await this.model.find().populate(this.populateFields);
@@ -23,13 +15,7 @@ class BaseController {
     }
   }
 
-  /**
-   * Obtiene un registro por su ID
-   * @param {Request} req - Objeto de solicitud Express
-   * @param {Response} res - Objeto de respuesta Express
-   * @param {string} req.params.id - ID del documento a buscar
-   * @returns {Promise<Response>} Documento encontrado
-   */
+
   async getById(req, res) {
     try {
       const item = await this.model
@@ -44,13 +30,7 @@ class BaseController {
     }
   }
 
-  /**
-   * Crea un nuevo registro
-   * @param {Request} req - Objeto de solicitud Express
-   * @param {Response} res - Objeto de respuesta Express
-   * @param {Object} req.body - Datos del nuevo documento
-   * @returns {Promise<Response>} Documento creado
-   */
+
   async create(req, res) {
     try {
       const item = new this.model(req.body);
@@ -64,14 +44,7 @@ class BaseController {
     }
   }
 
-  /**
-   * Actualiza un registro existente
-   * @param {Request} req - Objeto de solicitud Express
-   * @param {Response} res - Objeto de respuesta Express
-   * @param {string} req.params.id - ID del documento a actualizar
-   * @param {Object} req.body - Datos actualizados del documento
-   * @returns {Promise<Response>} Documento actualizado
-   */
+
   async update(req, res) {
     try {
       const item = await this.model
@@ -89,13 +62,7 @@ class BaseController {
     }
   }
 
-  /**
-   * Elimina un registro
-   * @param {Request} req - Objeto de solicitud Express
-   * @param {Response} res - Objeto de respuesta Express
-   * @param {string} req.params.id - ID del documento a eliminar
-   * @returns {Promise<Response>} Mensaje de confirmación
-   */
+ 
   async delete(req, res) {
     try {
       const item = await this.model.findByIdAndDelete(req.params.id);
