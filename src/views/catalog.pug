@@ -1,0 +1,51 @@
+doctype html
+html(lang='es')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Catálogo de Productos
+    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css', rel='stylesheet')
+
+  body
+    .container
+      h1.text-center.my-4 Catálogo de Productos
+
+      .row
+        //- Sidebar de categorías
+        .col-md-3.mb-4
+          .list-group
+            a.list-group-item.list-group-item-action(class=!currentCategory ? 'active' : '', href='/api/catalogo') Todas las Categorías
+            a.list-group-item.list-group-item-action(class=currentCategory === 'libro' ? 'active' : '', href='?category=libro') Libros
+            a.list-group-item.list-group-item-action(class=currentCategory === 'revista' ? 'active' : '', href='?category=revista') Revistas
+            a.list-group-item.list-group-item-action(class=currentCategory === 'articulo' ? 'active' : '', href='?category=articulo') Artículos
+
+        //- Tabla de productos
+        .col-md-9
+          if products.length
+            .table-responsive
+              table.table.table-hover.table-bordered
+                thead.table-light
+                  tr
+                    th Nombre
+                    th Categoría
+                    th Precio
+                    th Stock
+                    th Descripción
+                    th Proveedor
+                    th Contacto
+                tbody
+                  each product in products
+                    tr
+                      td= product.name
+                      td= product.category
+                      td.text-success= `$${product.price}`
+                      td= product.stock
+                      td.text-secondary.small= product.description || 'Sin descripción'
+                      td= product.supplier.name
+                      td.small
+                        div= product.supplier.email
+                        div= product.supplier.phone
+          else
+            .alert.alert-info No hay productos disponibles en esta categoría.
+
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js')
