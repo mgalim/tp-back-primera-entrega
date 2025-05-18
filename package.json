@@ -1,0 +1,29 @@
+{
+  "name": "tp-back-primera-entrega",
+  "version": "1.0.0",
+  "description": "Trabaja grupal Back TP1",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mgalim/tp-back-primera-entrega.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mgalim/tp-back-primera-entrega/issues"
+  },
+  "homepage": "https://github.com/mgalim/tp-back-primera-entrega#readme",
+  "dependencies": {
+    "dotenv": "16.5.0",
+    "express": "5.1.0",
+    "mongoose": "8.15.0",
+    "primer-entrega": "file:",
+    "pug": "3.0.3",
+    "zod": "3.24.4"
+  }
+}
