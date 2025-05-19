@@ -1,0 +1,64 @@
+### Configuración del entorno
+@BASE_URL = http://localhost:3050/
+@userId = 6827a134fb2f9a649f1d4bee
+
+### Roles disponibles (descomentar el rol deseado)
+@userRole = administrador
+# @userRole = empleado
+# @userRole = supervisor
+
+### Crear un nuevo usuario administrador
+POST {{BASE_URL}}/users
+Content-Type: application/json
+
+{
+    "name": "Admin",
+    "lastname": "User",
+    "email": "30akslpdsakl@example.com",
+    "password": "securePass123",
+    "role": "administrador"
+}
+
+### Crear un nuevo usuario empleado
+POST {{BASE_URL}}/users
+Content-Type: application/json
+
+{
+    "name": "Juan",
+    "lastname": "Pérez",
+    "email": "juan@example.com",
+    "password": "securePass456",
+    "role": "empleado"
+}
+
+### Obtener todos los usuarios
+GET {{BASE_URL}}/users
+
+### Obtener un usuario por ID
+GET {{BASE_URL}}/users/{{userId}}
+
+### Actualizar un usuario
+PUT {{BASE_URL}}/users/{{userId}}
+Content-Type: application/json
+
+{
+    "name": "Juan",
+    "lastname": "Pérez Actualizado",
+    "email": "juan.updated@example.com",
+    "password": "newPass789",
+    "role": "supervisor"
+}
+
+### Eliminar un usuario
+DELETE {{BASE_URL}}/users/{{userId}}
+
+### Obtener usuarios por rol
+GET {{BASE_URL}}/users/role/{{userRole}}
+
+### Actualizar rol de usuario
+PATCH {{BASE_URL}}/users/{{userId}}/role
+Content-Type: application/json
+
+{
+    "role": "supervisor"
+}

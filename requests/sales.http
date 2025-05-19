@@ -1,0 +1,32 @@
+### Crear una nueva venta
+@BASE_URL = http://localhost:3050/
+@productId = 682923573327bdd82d4c01fd
+
+@saleId = 6829220f3327bdd82d4c01c9
+
+POST {{BASE_URL}}/sales
+Content-Type: application/json
+
+{
+    "products": [
+        {
+            "product": "{{productId}}",
+            "quantity": 4,
+            "price": 2.50
+        }
+    ],
+    "customer": {
+        "name": "Gustavo Baranda",
+        "email": "Gustavo@example.com"
+    }
+}
+
+### Obtener todas las ventas
+GET {{BASE_URL}}/sales
+
+### Obtener una venta por ID
+GET {{BASE_URL}}/sales/{{saleId}}
+
+### Obtener ventas por fecha
+GET {{BASE_URL}}/sales?date=2024-01-20
+
