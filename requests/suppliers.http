@@ -1,0 +1,39 @@
+### Crear un nuevo proveedor
+
+@BASE_URL = http://localhost:3050
+@productId = 6827a020fb2f9a649f1d4be6
+
+@supplierId =
+
+@anotherProductId =
+
+POST {{BASE_URL}}/suppliers
+Content-Type: application/json
+
+{
+    "name": "Distribuidora Libros SA",
+    "email": "contacto@distribuidora.com",
+    "phone": "+54 11 1234-5678",
+    "address": "Av. Corrientes 1234, CABA"
+}
+
+### Obtener todos los proveedores
+GET {{BASE_URL}}/suppliers
+
+### Obtener un proveedor por ID
+GET {{BASE_URL}}/suppliers/{{supplierId}}
+
+### Actualizar un proveedor
+PUT {{BASE_URL}}/suppliers/{{supplierId}}
+Content-Type: application/json
+
+{
+    "name": "Distribuidora Libros SA",
+    "email": "nuevo.contacto@distribuidora.com",
+    "phone": "+54 11 8765-4321",
+    "address": "Av. Corrientes 1234, Piso 2, CABA",
+    "products": ["{{productId}}", "{{anotherProductId}}"]
+}
+
+### Eliminar un proveedor
+DELETE {{BASE_URL}}/suppliers/{{supplierId}}
