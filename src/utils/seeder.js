@@ -1,6 +1,7 @@
 import { Product } from '../models/product.js';
 import { Sale } from '../models/sale.js';
 import { Supplier } from '../models/supplier.js';
+import { User } from '../models/user.js';
 
 export const seedDatabase = async () => {
   try {
@@ -9,6 +10,7 @@ export const seedDatabase = async () => {
       Product.deleteMany({}),
       Sale.deleteMany({}),
       Supplier.deleteMany({}),
+      User.deleteMany({}),
     ]);
     console.log('Base de datos limpiada exitosamente');
 
@@ -125,6 +127,32 @@ export const seedDatabase = async () => {
       },
     ]);
     console.log('Ventas creadas exitosamente');
+
+    // Crear usuarios
+    await User.create([
+      {
+        name: 'Admin',
+        lastname: 'Sistema',
+        email: 'admin@libreria.com',
+        password: 'admin123',
+        role: 'administrador',
+      },
+      {
+        name: 'Juan',
+        lastname: 'Supervisor',
+        email: 'supervisor@libreria.com',
+        password: 'super123',
+        role: 'supervisor',
+      },
+      {
+        name: 'María',
+        lastname: 'Empleada',
+        email: 'empleada@libreria.com',
+        password: 'emp123',
+        role: 'empleado',
+      },
+    ]);
+    console.log('Usuarios creados exitosamente');
 
     console.log('Base de datos sembrada exitosamente');
   } catch (error) {
