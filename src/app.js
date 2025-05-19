@@ -4,11 +4,11 @@ import { fileURLToPath } from 'url';
 import { env } from './config/env.js';
 import { connectDB } from './config/mongo.config.js';
 import route from './routes/routes.js';
-// import { initializeDatabase } from './utils/init.js';
+import { initializeDatabase } from './utils/init.js';
 
 // Establecer conexión a la base de datos de MongoDb y cargar datos iniciales
 await connectDB(env.MONGO_URL);
-// await initializeDatabase();
+await initializeDatabase();
 
 const app = express();
 
