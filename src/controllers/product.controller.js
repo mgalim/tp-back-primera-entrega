@@ -1,12 +1,8 @@
-import BaseController from './base.controller.js';
+import { Types } from 'mongoose';
 import { Product } from '../models/product.js';
 import { Supplier } from '../models/supplier.js';
-import { Types } from 'mongoose';
+import BaseController from './base.controller.js';
 
-/**
- * Controlador para gestionar productos
- * @extends BaseController
- */
 class ProductController extends BaseController {
   constructor() {
     super(Product, ['supplier']);
@@ -46,14 +42,6 @@ class ProductController extends BaseController {
     }
   }
 
-  /**
-   * Obtiene productos por categoría
-   * @param {Request} req - Objeto de solicitud Express
-   * @param {Response} res - Objeto de respuesta Express
-   * @param {Object} req.params - Parámetros de ruta
-   * @param {('libro'|'revista'|'articulo')} req.params.category - Categoría del producto
-   * @returns {Promise<Response>} Lista de productos de la categoría especificada
-   */
   async getByCategory(req, res) {
     try {
       const products = await this.model.find({ category: req.params.category });
@@ -63,16 +51,6 @@ class ProductController extends BaseController {
     }
   }
 
-  /**
-   * Actualiza el stock de un producto
-   * @param {Request} req - Objeto de solicitud Express
-   * @param {Response} res - Objeto de respuesta Express
-   * @param {Object} req.params - Parámetros de ruta
-   * @param {string} req.params.id - ID del producto
-   * @param {Object} req.body - Datos para actualizar
-   * @param {number} req.body.quantity - Cantidad a agregar/restar del stock (positivo para agregar, negativo para restar)
-   * @returns {Promise<Response>} Producto actualizado
-   */
   async updateStock(req, res) {
     try {
       const { quantity } = req.body;
