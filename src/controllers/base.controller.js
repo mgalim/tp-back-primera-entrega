@@ -1,10 +1,8 @@
-
 class BaseController {
   constructor(model, populateFields = []) {
     this.model = model;
     this.populateFields = populateFields;
   }
-
 
   async getAll(req, res) {
     try {
@@ -14,7 +12,6 @@ class BaseController {
       res.status(500).json({ message: error.message });
     }
   }
-
 
   async getById(req, res) {
     try {
@@ -30,7 +27,6 @@ class BaseController {
     }
   }
 
-
   async create(req, res) {
     try {
       const item = new this.model(req.body);
@@ -43,7 +39,6 @@ class BaseController {
       res.status(400).json({ message: error.message });
     }
   }
-
 
   async update(req, res) {
     try {
@@ -62,7 +57,6 @@ class BaseController {
     }
   }
 
- 
   async delete(req, res) {
     try {
       const item = await this.model.findByIdAndDelete(req.params.id);

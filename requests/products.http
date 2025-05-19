@@ -1,0 +1,38 @@
+### Crear un nuevo producto
+@BASE_URL = http://localhost:3050
+@productId = 6827a134fb2f9a649f1d4bee
+
+# Crear producto
+POST {{BASE_URL}}/products
+Content-Type: application/json
+
+{
+    "name": "El Principito 23",
+    "price": 2500,
+    "description": "Libro clásico de Antoine de Saint-Exupéry",
+    "stock": 50,
+    "category": "libro",
+    "prueba": "prueba",
+    "supplier":"682923373327bdd82d4c01f9"
+}
+
+### Obtener todos los productos
+GET {{BASE_URL}}/products
+
+### Obtener un producto por ID
+GET {{BASE_URL}}/products/6827bde06e891dd98d8a5676
+
+### Actualizar un producto
+PUT {{BASE_URL}}/products/{{productId}}
+Content-Type: application/json
+
+{
+    "name": "El Principito 4",
+    "price": 2800,
+    "description": "Libro clásico de Antoine de Saint-Exupéry - Edición especial",
+    "stock": 45,
+    "category": "libro"
+}
+
+### Eliminar un producto
+DELETE {{BASE_URL}}/products/{{productId}}
