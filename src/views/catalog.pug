@@ -14,7 +14,7 @@ html(lang='es')
         //- Sidebar de categorías
         .col-md-3.mb-4
           .list-group
-            a.list-group-item.list-group-item-action(class=!currentCategory ? 'active' : '', href='/api/catalogo') Todas las Categorías
+            a.list-group-item.list-group-item-action(class=!currentCategory ? 'active' : '', href='/products/catalog') Todas las Categorías
             a.list-group-item.list-group-item-action(class=currentCategory === 'libro' ? 'active' : '', href='?category=libro') Libros
             a.list-group-item.list-group-item-action(class=currentCategory === 'revista' ? 'active' : '', href='?category=revista') Revistas
             a.list-group-item.list-group-item-action(class=currentCategory === 'articulo' ? 'active' : '', href='?category=articulo') Artículos
