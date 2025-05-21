@@ -1,8 +1,11 @@
 ### Crear una nueva venta
-@BASE_URL = http://localhost:3050/
-@productId = 682923573327bdd82d4c01fd
+@BASE_URL = http://localhost:3050
+@productId = 682a5caf4089ecf855303bc3
 
-@saleId = 6829220f3327bdd82d4c01c9
+@saleId = 682a576baee16245150d9eea
+
+@startDate = 2024-05-18
+@endDate = 2025-05-18
 
 POST {{BASE_URL}}/sales
 Content-Type: application/json
@@ -11,8 +14,8 @@ Content-Type: application/json
     "products": [
         {
             "product": "{{productId}}",
-            "quantity": 4,
-            "price": 2.50
+            "quantity": 1,
+            "price": 2500
         }
     ],
     "customer": {
@@ -27,6 +30,14 @@ GET {{BASE_URL}}/sales
 ### Obtener una venta por ID
 GET {{BASE_URL}}/sales/{{saleId}}
 
-### Obtener ventas por fecha
-GET {{BASE_URL}}/sales?date=2024-01-20
+### Obtener ventas por periodo de tiempo
+GET {{BASE_URL}}/sales/reports/by-date?startDate={{startDate}}&endDate={{endDate}}
 
+### Obtener ventas por semana o mes (week o month)
+GET {{BASE_URL}}/sales/reports/by-period?period=week
+
+### Obtener Productos más vendidos
+GET {{BASE_URL}}/sales/reports/top-products
+
+### Obtener Total de Ventas en Dinero
+GET {{BASE_URL}}/sales/reports/total
