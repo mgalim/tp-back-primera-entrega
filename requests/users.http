@@ -1,5 +1,5 @@
 ### Configuración del entorno
-@BASE_URL = http://localhost:3050/
+@BASE_URL = http://localhost:3050
 @userId = 6827a134fb2f9a649f1d4bee
 
 ### Roles disponibles (descomentar el rol deseado)
