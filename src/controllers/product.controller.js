@@ -11,13 +11,13 @@ class ProductController extends BaseController {
   async create(req, res) {
     try {
       const { name, description, price, stock, category, supplier } = req.body;
-
+      // Verificar que el id sea valido
       if (!Types.ObjectId.isValid(supplier)) {
         return res.status(400).json({ message: 'ID de proveedor inválido' });
       }
 
       const supplierFound = await Supplier.findById(supplier);
-
+      // Chequear que el supplier exista
       if (!supplierFound) {
         return res.status(404).json({ message: 'Proveedor no encontrado' });
       }

@@ -21,6 +21,7 @@ export const seedDatabase = async () => {
         email: 'contacto@planeta.com',
         phone: '123-456-7890',
         address: 'Av. Independencia 1234',
+        _id: "682a5647aee16245150d9eb2"
       },
       {
         name: 'Penguin Random House',
@@ -46,6 +47,7 @@ export const seedDatabase = async () => {
         stock: 50,
         category: 'libro',
         supplier: suppliers[0]._id,
+        _id: "6827a020fb2f9a649f1d4be6"
       },
       {
         name: 'Cien años de soledad',
@@ -101,6 +103,7 @@ export const seedDatabase = async () => {
           name: 'Juan Pérez',
           email: 'juan@email.com',
         },
+        _id: "682a576baee16245150d9eea"
       },
       {
         products: [

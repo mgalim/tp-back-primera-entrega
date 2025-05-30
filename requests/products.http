@@ -1,6 +1,6 @@
 ### Crear un nuevo producto
 @BASE_URL = http://localhost:3050
-@productId = 682a5647aee16245150d9eb8
+@productId = 6827a020fb2f9a649f1d4be6
 
 @supplierId = 682a5647aee16245150d9eb2
 # Crear producto

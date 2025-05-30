@@ -1,6 +1,6 @@
 ### Crear una nueva venta
 @BASE_URL = http://localhost:3050
-@productId = 682a5caf4089ecf855303bc3
+@productId = 6827a020fb2f9a649f1d4be6
 
 @saleId = 682a576baee16245150d9eea
 
