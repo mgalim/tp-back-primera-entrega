@@ -21,6 +21,8 @@ app.set('views', path.join(__dirname, 'views'));
 // Middlewares para manejar datos JSON y URL-encoded
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// Inicializar Passport
+app.use(passport.initialize());
 
 // Setear las rutas
 app.use('/', route);

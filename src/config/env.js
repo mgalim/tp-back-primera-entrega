@@ -6,6 +6,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['dev', 'test', 'production']).default('dev'),
   PORT: z.string().transform(Number).default('3000'),
   MONGO_URL: z.string(),
+  JWT_SECRET: z.string(),
 });
 
 const parsed = envSchema.safeParse(process.env);
