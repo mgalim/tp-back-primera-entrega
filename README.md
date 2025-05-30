@@ -62,7 +62,6 @@ El servidor se iniciará en el puerto configurado (por defecto: 3050) con recarg
 │   ├── controllers/      	# Controladores de rutas
 │   ├── models/           	# Modelos de base de datos
 │   ├── routes/             # Rutas de la aplicación
-│   ├── services/          	# Lógica de negocio
 │   ├── utils/              # Funciones de utilidad
 │   ├── validations/     	# Funciones de utilidad
 │   └── views/              # Plantillas Pug
