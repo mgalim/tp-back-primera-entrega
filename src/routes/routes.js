@@ -4,6 +4,8 @@ import saleRoutes from './sale.routes.js';
 import supplierRoutes from './supplier.routes.js';
 import userRoutes from './user.routes.js';
 import authRoutes from './auth.routes.js';
+import customerRoutes from './customer.routes.js';
+
 const router = express.Router();
 
 // Ruta principal
@@ -17,4 +19,5 @@ router.use('/sales', saleRoutes);
 router.use('/suppliers', supplierRoutes);
 router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
+router.use('/customer', customerRoutes);
 export default router;
