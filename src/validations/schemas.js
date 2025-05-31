@@ -22,7 +22,18 @@ export const productSchema = z.object({
   supplier: z.string({
     required_error: 'El proveedor es requerido',
   }),
+  isNew: z.boolean({
+    required_error: 'El estado es requerido',
+  }),
 });
+
+export const updateProductSchema = productSchema
+  .omit({
+    stock: true,
+    isNew: true,
+    supplier: true,
+  })
+  .partial();
 
 export const loginSchema = z.object({
   email: z.string({

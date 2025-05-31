@@ -56,6 +56,7 @@ export const seedDatabase = async () => {
         stock: 45,
         category: 'libro',
         supplier: suppliers[1]._id,
+        _id: '683b56650850eb18a35bdd5c',
       },
       {
         name: 'Revista Literaria Ñ',
@@ -139,6 +140,14 @@ export const seedDatabase = async () => {
         email: 'admin@libreria.com',
         password: '$2b$10$lY7nOP8Tw84wHSbUjKH6juKhFIIDZrKkPjk5F4HDzlQUTGR/ql6DK',
         role: 'administrador',
+      },
+      {
+        name: 'Catriel',
+        lastname: 'Escobar',
+        email: 'catriel.escobar@gmail.com',
+        password: '$2b$10$lY7nOP8Tw84wHSbUjKH6juKhFIIDZrKkPjk5F4HDzlQUTGR/ql6DK',
+        role: 'cliente',
+        _id: '683a4f74d9cef30a6421c632',
       },
     ]);
     console.log('Usuarios creados exitosamente');

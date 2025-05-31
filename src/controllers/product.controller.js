@@ -10,7 +10,15 @@ class ProductController extends BaseController {
 
   async create(req, res) {
     try {
-      const { name, description, price, stock, category, supplier } = req.body;
+      const {
+        name,
+        description,
+        price,
+        stock,
+        category,
+        supplier,
+        isNew = false,
+      } = req.body;
       // Verificar que el id sea valido
       if (!Types.ObjectId.isValid(supplier)) {
         return res.status(400).json({ message: 'ID de proveedor inválido' });
@@ -21,18 +29,34 @@ class ProductController extends BaseController {
       if (!supplierFound) {
         return res.status(404).json({ message: 'Proveedor no encontrado' });
       }
-      const product = new Product({
-        name,
-        description,
-        price,
-        stock,
-        category,
+      let productResponse;
+      const foundProductBySupplier = await Product.findOne({
         supplier: supplierFound._id,
-      });
-      (await product.save()).populate('supplier');
+        name,
+      }).populate('supplier');
+      if (foundProductBySupplier && !isNew) {
+        console.log('Producto encontrado');
+        foundProductBySupplier.stock += stock;
+        await foundProductBySupplier.save();
+        productResponse = foundProductBySupplier;
+      } else {
+        console.log('Producto no encontrado, creando uno nuevo');
+        const product = new Product({
+          name,
+          description,
+          price,
+          stock,
+          category,
+          supplier: supplierFound._id,
+        });
+        const savedProduct = await product.save();
+        productResponse = await Product.findById(savedProduct._id).populate(
+          'supplier'
+        );
+      }
       res.status(201).json({
         message: 'Producto creado correctamente',
-        data: product,
+        data: productResponse,
       });
     } catch (error) {
       console.log(error);
@@ -54,6 +78,8 @@ class ProductController extends BaseController {
   async updateStock(req, res) {
     try {
       const { quantity } = req.body;
+      if (!quantity)
+        return res.status(400).json({ message: 'Quantity is required' });
       const product = await this.model.findById(req.params.id);
 
       if (!product) {
