@@ -1,3 +1,4 @@
+import { Discount } from '../models/discount.js';
 import { Product } from '../models/product.js';
 import { Sale } from '../models/sale.js';
 import { Supplier } from '../models/supplier.js';
@@ -11,6 +12,7 @@ export const seedDatabase = async () => {
       Sale.deleteMany({}),
       Supplier.deleteMany({}),
       User.deleteMany({}),
+      Discount.deleteMany({}),
     ]);
     console.log('Base de datos limpiada exitosamente');
 
@@ -100,6 +102,7 @@ export const seedDatabase = async () => {
             price: products[3].price,
           },
         ],
+        total: 3000,
         customer: {
           name: 'Juan Pérez',
           email: 'juan@email.com',
@@ -124,6 +127,7 @@ export const seedDatabase = async () => {
             price: products[4].price,
           },
         ],
+        total: 3700,
         customer: {
           name: 'María García',
           email: 'maria@email.com',

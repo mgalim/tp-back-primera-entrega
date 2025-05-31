@@ -4,7 +4,7 @@ import { User } from '../models/user.js';
 import { Discount } from '../models/discount.js';
 class SaleController extends BaseController {
   constructor() {
-    super(Sale, ['products.product']);
+    super(Sale, ['products.product', 'user']);
   }
 
   async create(req, res) {

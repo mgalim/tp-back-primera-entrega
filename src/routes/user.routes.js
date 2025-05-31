@@ -14,6 +14,11 @@ router.get(
   userController.getAll.bind(userController)
 );
 router.get(
+  '/discount',
+  authenticate,
+  userController.getDiscountByEmail.bind(userController)
+);
+router.get(
   '/:id',
   authenticate,
   authorize('administrador'),

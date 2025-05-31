@@ -1,3 +1,4 @@
+import { Discount } from '../models/discount.js';
 import { User } from '../models/user.js';
 import { hashPassword } from '../utils/passwordHashed.js';
 import BaseController from './base.controller.js';
@@ -57,6 +58,17 @@ class UserController extends BaseController {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
+  }
+  async getDiscountByEmail(req, res) {
+    const { email } = req.query;
+    if (!email) return res.status(400).json({ message: 'Email is required' });
+    // Busca el usuario por el correo electrónico y devuelve el descuento asociado a
+    const user = await this.model.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    const discount = await Discount.findOne({ user: user._id });
+    res.status(200).json(discount);
   }
 }
 
