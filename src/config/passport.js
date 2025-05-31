@@ -11,11 +11,13 @@ const options = {
 passport.use(
   new JwtStrategy(options, async (jwtPayload, done) => {
     try {
-      const { password, ...user } = await User.findById(jwtPayload.id);
-      if (user) {
-        return done(null, user);
+      const userDoc = await User.findById(jwtPayload.id);
+      if (!userDoc) {
+        return done(null, false); // o manejar el error como corresponda
       }
-      return done(null, false);
+
+      const { password, ...user } = userDoc.toObject(); // O userDoc si no usás .toObject()
+      return done(null, user);
     } catch (error) {
       return done(error, false);
     }

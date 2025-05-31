@@ -1,4 +1,5 @@
 import { User } from '../models/user.js';
+import { hashPassword } from '../utils/passwordHashed.js';
 import BaseController from './base.controller.js';
 
 class UserController extends BaseController {
@@ -13,6 +14,27 @@ class UserController extends BaseController {
       res.status(200).json(users);
     } catch (error) {
       res.status(500).json({ message: error.message });
+    }
+  }
+
+  async create(req, res) {
+    try {
+      const { name, lastname, email, password, role } = req.body;
+      const hashedPassword = await hashPassword(password);
+      const userFound = await this.model.findOne({ email });
+      if (userFound) {
+        return res.status(400).json({ message: 'Usuario ya existe' });
+      }
+      const user = await this.model.create({
+        name,
+        lastname,
+        email,
+        password: hashedPassword,
+        role,
+      });
+      return res.status(201).json(user);
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
     }
   }
 

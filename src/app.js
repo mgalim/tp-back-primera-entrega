@@ -5,6 +5,8 @@ import { env } from './config/env.js';
 import { connectDB } from './config/mongo.config.js';
 import route from './routes/routes.js';
 import { initializeDatabase } from './utils/init.js';
+import { hashPassword } from './utils/passwordHashed.js';
+import passport from './config/passport.js';
 
 // Establecer conexión a la base de datos de MongoDb y cargar datos iniciales
 await connectDB(env.MONGO_URL);
