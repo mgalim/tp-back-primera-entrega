@@ -1,90 +1,53 @@
-doctype html
-html(lang='es')
-  head
-    meta(charset='UTF-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    title Customer Dashboard - Rompiendo Códigos
-    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css', rel='stylesheet')
-    style.
-      body {
-        background-color: #0a0a0a;
-        color: #ffffff;
-      }
-      .dashboard-container {
-        padding: 2rem;
-      }
-      .progress {
-        height: 25px;
-      }
-      .card {
-        background: rgba(26, 71, 42, 0.9);
-        border: none;
-      }
-      .product-card {
-        transition: transform 0.2s;
-      }
-      .product-card:hover {
-        transform: translateY(-5px);
-      }
+extends layouts/main
 
-  body
-    .container.dashboard-container
-      h1.text-center.mb-4 Welcome to Your Dashboard
-      
-      if discount
-        .card.mb-4
-          .card-body
-            h5.card-title Progress towards your next discount
-            .progress.mb-2
-              .progress-bar.bg-success(
-                role='progressbar'
-                style=`width: ${(discount.accumulated / 10000) * 100}%`
-                aria-valuenow=discount.accumulated
-                aria-valuemin='0'
-                aria-valuemax='10000'
-              )
-            .d-flex.justify-content-between
-              small $#{discount.accumulated} accumulated
-              small $#{10000 - discount.accumulated} to go for 20% discount
+block styles
+  style.
+    .dashboard-container {
+      padding: 2rem;
+    }
+    .progress {
+      height: 25px;
+    }
+    .card {
+      background: rgba(26, 71, 42, 0.9);
+      border: none;
+    }
+    .product-card {
+      transition: transform 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
 
-      .row.row-cols-1.row-cols-md-3.g-4.mt-4
-        each product in products
-          .col
-            .card.product-card.h-100
-              .card-body
-                h5.card-title.text-white= product.name
-                p.card-text.text-light= product.description
-                .d-flex.justify-content-between.align-items-center
-                  h6.text-success $#{product.price}
-                  span.badge.bg-info= `Stock: ${product.stock}`
+block content
+  .dashboard-container
+    h1.text-center.mb-4 Bienvenido a tu panel de cliente
+    
+    if discount
+      .card.mb-4
+        .card-body
+          h5.card-title Progreso de descuento
+          .progress.mb-2
+            .progress-bar.bg-success(
+              role='progressbar'
+              style=`width: ${(discount.accumulated / 10000) * 100}%`
+              aria-valuenow=discount.accumulated
+              aria-valuemin='0'
+              aria-valuemax='10000'
+            )
+          .d-flex.justify-content-between
+            small $#{discount.accumulated} Acumulado
+            small $#{10000 - discount.accumulated} Para conseguir un 20% de descuento
+
+    .row.row-cols-1.row-cols-md-3.g-4.mt-4
+      each product in products
+        .col
+          .card.product-card.h-100
+            .card-body
+              h5.card-title.text-white= product.name
+              p.card-text.text-light= product.description
+              .d-flex.justify-content-between.align-items-center
+                h6.text-success $#{product.price}
+                span.badge.bg-info= `Stock: ${product.stock}`
 
     script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js')
-    script.
-  
-      const token = localStorage.getItem('token');
-      console.log(token);
-      function fetchWithAuth(url, options = {}) {
-        return fetch(url, {
-          ...options,
-          headers: {
-            ...options.headers,
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-      }
-  
-      async function loadDashboardData() {
-        try {
-          const response = await fetchWithAuth('/customer/dashboard/data');
-          if (response.ok) {
-            const data = await response.json();
-            // Handle the data
-          }
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      }
-      if (!token) {
-        window.location.href = '/auth/login';
-      }

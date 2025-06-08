@@ -5,24 +5,13 @@ import BaseController from './base.controller.js';
 
 class ProductController extends BaseController {
   constructor() {
-    super(Product, ['supplier']);
+    super(Product);
   }
 
   async create(req, res) {
     try {
-      const {
-        name,
-        description,
-        price,
-        stock,
-        category,
-        supplier,
-        isNew = false,
-      } = req.body;
-      // Verificar que el id sea valido
-      if (!Types.ObjectId.isValid(supplier)) {
-        return res.status(400).json({ message: 'ID de proveedor inválido' });
-      }
+      const { name, description, price, stock, category, supplier, isbn } =
+        req.body;
 
       const supplierFound = await Supplier.findById(supplier);
       // Chequear que el supplier exista
@@ -31,10 +20,9 @@ class ProductController extends BaseController {
       }
       let productResponse;
       const foundProductBySupplier = await Product.findOne({
-        supplier: supplierFound._id,
-        name,
-      }).populate('supplier');
-      if (foundProductBySupplier && !isNew) {
+        isbn,
+      });
+      if (foundProductBySupplier) {
         console.log('Producto encontrado');
         foundProductBySupplier.stock += stock;
         await foundProductBySupplier.save();
@@ -47,12 +35,17 @@ class ProductController extends BaseController {
           price,
           stock,
           category,
-          supplier: supplierFound._id,
+          isbn,
         });
         const savedProduct = await product.save();
-        productResponse = await Product.findById(savedProduct._id).populate(
-          'supplier'
-        );
+        productResponse = await Product.findById(savedProduct._id);
+      }
+      const indexFound = supplierFound.products.findIndex(
+        (p) => p._id == productResponse._id
+      );
+      if (indexFound == -1) {
+        supplierFound.products.push(productResponse);
+        await supplierFound.save();
       }
       res.status(201).json({
         message: 'Producto creado correctamente',

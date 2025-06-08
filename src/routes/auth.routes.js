@@ -15,4 +15,9 @@ router.post(
   authController.login.bind(authController)
 );
 
+router.post('/logout', (req, res) => {
+  res.clearCookie('token');
+  res.json({ success: true });
+});
+
 export default router;

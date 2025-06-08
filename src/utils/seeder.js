@@ -16,31 +16,6 @@ export const seedDatabase = async () => {
     ]);
     console.log('Base de datos limpiada exitosamente');
 
-    // Crear proveedores
-    const suppliers = await Supplier.create([
-      {
-        name: 'Editorial Planeta',
-        email: 'contacto@planeta.com',
-        phone: '123-456-7890',
-        address: 'Av. Independencia 1234',
-        _id: '682a5647aee16245150d9eb2',
-      },
-      {
-        name: 'Penguin Random House',
-        email: 'info@penguinrandom.com',
-        phone: '098-765-4321',
-        address: 'Calle Libertad 567',
-      },
-      {
-        name: 'Accesorios Literarios SA',
-        email: 'ventas@accesorios-literarios.com',
-        phone: '555-123-4567',
-        address: 'Calle de los Libros 789',
-      },
-    ]);
-    console.log('Proveedores creados exitosamente');
-
-    // Crear productos
     const products = await Product.create([
       {
         name: '1984',
@@ -48,7 +23,7 @@ export const seedDatabase = async () => {
         description: 'Novela distópica de George Orwell',
         stock: 50,
         category: 'libro',
-        supplier: suppliers[0]._id,
+        isbn: '978-84-380-0564-9',
         _id: '6827a020fb2f9a649f1d4be6',
       },
       {
@@ -57,7 +32,7 @@ export const seedDatabase = async () => {
         description: 'Obra maestra de Gabriel García Márquez',
         stock: 45,
         category: 'libro',
-        supplier: suppliers[1]._id,
+        isbn: '978-84-380-0565-9',
         _id: '683b56650850eb18a35bdd5c',
       },
       {
@@ -66,7 +41,7 @@ export const seedDatabase = async () => {
         description: 'Revista semanal de literatura y cultura',
         stock: 100,
         category: 'revista',
-        supplier: suppliers[1]._id,
+        isbn: '978-84-380-0566-9',
       },
       {
         name: 'Marcapáginas Premium',
@@ -74,7 +49,7 @@ export const seedDatabase = async () => {
         description: 'Marcapáginas de cuero genuino',
         stock: 150,
         category: 'articulo',
-        supplier: suppliers[2]._id,
+        isbn: '978-84-380-0567-9',
       },
       {
         name: 'Funda Protectora de Libros',
@@ -82,9 +57,39 @@ export const seedDatabase = async () => {
         description: 'Funda ajustable para libros de tapa dura',
         stock: 75,
         category: 'articulo',
-        supplier: suppliers[2]._id,
+        isbn: '978-84-380-0568-9',
       },
     ]);
+
+    // Crear proveedores
+    const suppliers = await Supplier.create([
+      {
+        name: 'Editorial Planeta',
+        email: 'contacto@planeta.com',
+        phone: '123-456-7890',
+        address: 'Av. Independencia 1234',
+        _id: '682a5647aee16245150d9eb2',
+        products: [products[0]._id, products[1]._id],
+      },
+      {
+        name: 'Penguin Random House',
+        email: 'info@penguinrandom.com',
+        phone: '098-765-4321',
+        address: 'Calle Libertad 567',
+        products: [products[0]._id, products[1]._id],
+      },
+      {
+        name: 'Accesorios Literarios SA',
+        email: 'ventas@accesorios-literarios.com',
+        phone: '555-123-4567',
+        address: 'Calle de los Libros 789',
+        products: [products[0]._id, products[1]._id],
+      },
+    ]);
+    console.log('Proveedores creados exitosamente');
+
+    // Crear productos
+
     console.log('Productos creados exitosamente');
 
     // Crear ventas

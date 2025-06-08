@@ -76,8 +76,11 @@ html(lang='es')
           const data = await response.json();
           
           if (response.ok) {
-            localStorage.setItem('token', data.token);
+           if (data.user.role === 'cliente') {
+            window.location.href = '/customer/dashboard';
+           }else {
             window.location.href = '/products/catalog';
+           }
           } else {
             errorMessage.style.display = 'block';
             errorMessage.textContent = data.message || 'Invalid credentials';

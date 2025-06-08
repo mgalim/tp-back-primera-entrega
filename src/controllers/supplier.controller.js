@@ -3,7 +3,7 @@ import BaseController from './base.controller.js';
 
 class SupplierController extends BaseController {
   constructor() {
-    super(Supplier);
+    super(Supplier, ['products']);
   }
 
   async getByCategory(req, res) {

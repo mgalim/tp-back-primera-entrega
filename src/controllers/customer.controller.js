@@ -5,14 +5,13 @@ class CustomerController {
   async getDashboard(req, res) {
     try {
       const products = await Product.find().select('name description price stock');
-      const discount = await Discount.findOne({ 
-        user: req.user._id,
-        isUsed: false 
+      const discount = await Discount.findOne({
+        user: req.user._id.toString(),
       });
 
-      res.render('customer-dashboard', { 
+      res.render('customer-dashboard', {
         products,
-        discount
+        discount,
       });
     } catch (error) {
       console.error(error);

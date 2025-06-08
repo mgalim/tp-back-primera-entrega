@@ -11,21 +11,21 @@ router.get('/catalog', productController.getCatalog.bind(productController));
 router.get('/:id', productController.getById.bind(productController));
 router.post(
   '/',
-  authenticate,
+  authenticate('api'),
   authorize('administrador'),
   validateSchema(productSchema),
   productController.create.bind(productController)
 );
 router.put(
   '/:id',
-  authenticate,
+  authenticate('api'),
   authorize('administrador'),
   validateSchema(updateProductSchema),
   productController.update.bind(productController)
 );
 router.delete(
   '/:id',
-  authenticate,
+  authenticate('api'),
   authorize('administrador'),
   productController.delete.bind(productController)
 );
@@ -35,7 +35,7 @@ router.get(
 );
 router.put(
   '/:id/stock',
-  authenticate,
+  authenticate('api'),
   authorize('administrador'),
   productController.updateStock.bind(productController)
 );

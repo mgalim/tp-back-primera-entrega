@@ -9,38 +9,38 @@ const router = Router();
 // Rutas CRUD básicas
 router.get(
   '/',
-  authenticate,
+  authenticate('api'),
   authorize('administrador'),
   userController.getAll.bind(userController)
 );
 router.get(
   '/discount',
-  authenticate,
+  authenticate('api'),
   userController.getDiscountByEmail.bind(userController)
 );
 router.get(
   '/:id',
-  authenticate,
+  authenticate('api'),
   authorize('administrador'),
   userController.getById.bind(userController)
 );
 router.post(
   '/',
-  authenticate,
+  authenticate('api'),
   authorize('administrador'),
   validateSchema(userSchema),
   userController.create.bind(userController)
 );
 router.put(
   '/:id',
-  authenticate,
+  authenticate('api'),
   authorize('administrador'),
   validateSchema(updateUserSchema),
   userController.update.bind(userController)
 );
 router.delete(
   '/:id',
-  authenticate,
+  authenticate('api'),
   authorize('administrador'),
   userController.delete.bind(userController)
 );
@@ -48,13 +48,13 @@ router.delete(
 // Rutas específicas para gestión de roles
 router.get(
   '/role/:role',
-  authenticate,
+  authenticate('api'),
   authorize('administrador'),
   userController.getByRole.bind(userController)
 );
 router.patch(
   '/:id/role',
-  authenticate,
+  authenticate('api'),
   authorize('administrador'),
   userController.updateRole.bind(userController)
 );

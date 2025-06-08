@@ -22,8 +22,8 @@ export const productSchema = z.object({
   supplier: z.string({
     required_error: 'El proveedor es requerido',
   }),
-  isNew: z.boolean({
-    required_error: 'El estado es requerido',
+  isbn: z.string({
+    required_error: 'El ISBN es requerido',
   }),
 });
 
