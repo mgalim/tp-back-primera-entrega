@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
 const supplierSchema = new mongoose.Schema({
   name: {
@@ -17,6 +17,12 @@ const supplierSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  products: [
+    {
+      type: Types.ObjectId,
+      ref: 'Product',
+    },
+  ],
 });
 
 export const Supplier = mongoose.model('Supplier', supplierSchema);

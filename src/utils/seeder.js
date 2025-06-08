@@ -1,3 +1,4 @@
+import { Discount } from '../models/discount.js';
 import { Product } from '../models/product.js';
 import { Sale } from '../models/sale.js';
 import { Supplier } from '../models/supplier.js';
@@ -11,8 +12,54 @@ export const seedDatabase = async () => {
       Sale.deleteMany({}),
       Supplier.deleteMany({}),
       User.deleteMany({}),
+      Discount.deleteMany({}),
     ]);
     console.log('Base de datos limpiada exitosamente');
+
+    const products = await Product.create([
+      {
+        name: '1984',
+        price: 2500,
+        description: 'Novela distópica de George Orwell',
+        stock: 50,
+        category: 'libro',
+        isbn: '978-84-380-0564-9',
+        _id: '6827a020fb2f9a649f1d4be6',
+      },
+      {
+        name: 'Cien años de soledad',
+        price: 3000,
+        description: 'Obra maestra de Gabriel García Márquez',
+        stock: 45,
+        category: 'libro',
+        isbn: '978-84-380-0565-9',
+        _id: '683b56650850eb18a35bdd5c',
+      },
+      {
+        name: 'Revista Literaria Ñ',
+        price: 1200,
+        description: 'Revista semanal de literatura y cultura',
+        stock: 100,
+        category: 'revista',
+        isbn: '978-84-380-0566-9',
+      },
+      {
+        name: 'Marcapáginas Premium',
+        price: 800,
+        description: 'Marcapáginas de cuero genuino',
+        stock: 150,
+        category: 'articulo',
+        isbn: '978-84-380-0567-9',
+      },
+      {
+        name: 'Funda Protectora de Libros',
+        price: 1500,
+        description: 'Funda ajustable para libros de tapa dura',
+        stock: 75,
+        category: 'articulo',
+        isbn: '978-84-380-0568-9',
+      },
+    ]);
 
     // Crear proveedores
     const suppliers = await Supplier.create([
@@ -21,65 +68,28 @@ export const seedDatabase = async () => {
         email: 'contacto@planeta.com',
         phone: '123-456-7890',
         address: 'Av. Independencia 1234',
+        _id: '682a5647aee16245150d9eb2',
+        products: [products[0]._id, products[1]._id],
       },
       {
         name: 'Penguin Random House',
         email: 'info@penguinrandom.com',
         phone: '098-765-4321',
         address: 'Calle Libertad 567',
+        products: [products[0]._id, products[1]._id],
       },
       {
         name: 'Accesorios Literarios SA',
         email: 'ventas@accesorios-literarios.com',
         phone: '555-123-4567',
         address: 'Calle de los Libros 789',
+        products: [products[0]._id, products[1]._id],
       },
     ]);
     console.log('Proveedores creados exitosamente');
 
     // Crear productos
-    const products = await Product.create([
-      {
-        name: '1984',
-        price: 2500,
-        description: 'Novela distópica de George Orwell',
-        stock: 50,
-        category: 'libro',
-        supplier: suppliers[0]._id,
-      },
-      {
-        name: 'Cien años de soledad',
-        price: 3000,
-        description: 'Obra maestra de Gabriel García Márquez',
-        stock: 45,
-        category: 'libro',
-        supplier: suppliers[1]._id,
-      },
-      {
-        name: 'Revista Literaria Ñ',
-        price: 1200,
-        description: 'Revista semanal de literatura y cultura',
-        stock: 100,
-        category: 'revista',
-        supplier: suppliers[1]._id,
-      },
-      {
-        name: 'Marcapáginas Premium',
-        price: 800,
-        description: 'Marcapáginas de cuero genuino',
-        stock: 150,
-        category: 'articulo',
-        supplier: suppliers[2]._id,
-      },
-      {
-        name: 'Funda Protectora de Libros',
-        price: 1500,
-        description: 'Funda ajustable para libros de tapa dura',
-        stock: 75,
-        category: 'articulo',
-        supplier: suppliers[2]._id,
-      },
-    ]);
+
     console.log('Productos creados exitosamente');
 
     // Crear ventas
@@ -97,10 +107,12 @@ export const seedDatabase = async () => {
             price: products[3].price,
           },
         ],
+        total: 3000,
         customer: {
           name: 'Juan Pérez',
           email: 'juan@email.com',
         },
+        _id: '682a576baee16245150d9eea',
       },
       {
         products: [
@@ -120,6 +132,7 @@ export const seedDatabase = async () => {
             price: products[4].price,
           },
         ],
+        total: 3700,
         customer: {
           name: 'María García',
           email: 'maria@email.com',
@@ -134,22 +147,16 @@ export const seedDatabase = async () => {
         name: 'Admin',
         lastname: 'Sistema',
         email: 'admin@libreria.com',
-        password: 'admin123',
+        password: '$2b$10$lY7nOP8Tw84wHSbUjKH6juKhFIIDZrKkPjk5F4HDzlQUTGR/ql6DK',
         role: 'administrador',
       },
       {
-        name: 'Juan',
-        lastname: 'Supervisor',
-        email: 'supervisor@libreria.com',
-        password: 'super123',
-        role: 'supervisor',
-      },
-      {
-        name: 'María',
-        lastname: 'Empleada',
-        email: 'empleada@libreria.com',
-        password: 'emp123',
-        role: 'empleado',
+        name: 'Catriel',
+        lastname: 'Escobar',
+        email: 'catriel.escobar@gmail.com',
+        password: '$2b$10$lY7nOP8Tw84wHSbUjKH6juKhFIIDZrKkPjk5F4HDzlQUTGR/ql6DK',
+        role: 'cliente',
+        _id: '683a4f74d9cef30a6421c632',
       },
     ]);
     console.log('Usuarios creados exitosamente');

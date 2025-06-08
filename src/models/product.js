@@ -20,9 +20,8 @@ const productSchema = new mongoose.Schema({
     enum: ['libro', 'revista', 'articulo'],
     required: true,
   },
-  supplier: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Supplier',
+  isbn: {
+    type: String,
     required: true,
   },
 });

@@ -5,34 +5,51 @@ import BaseController from './base.controller.js';
 
 class ProductController extends BaseController {
   constructor() {
-    super(Product, ['supplier']);
+    super(Product);
   }
 
   async create(req, res) {
     try {
-      const { name, description, price, stock, category, supplier } = req.body;
-
-      if (!Types.ObjectId.isValid(supplier)) {
-        return res.status(400).json({ message: 'ID de proveedor inválido' });
-      }
+      const { name, description, price, stock, category, supplier, isbn } =
+        req.body;
 
       const supplierFound = await Supplier.findById(supplier);
-
+      // Chequear que el supplier exista
       if (!supplierFound) {
         return res.status(404).json({ message: 'Proveedor no encontrado' });
       }
-      const product = new Product({
-        name,
-        description,
-        price,
-        stock,
-        category,
-        supplier: supplierFound._id,
+      let productResponse;
+      const foundProductBySupplier = await Product.findOne({
+        isbn,
       });
-      (await product.save()).populate('supplier');
+      if (foundProductBySupplier) {
+        console.log('Producto encontrado');
+        foundProductBySupplier.stock += stock;
+        await foundProductBySupplier.save();
+        productResponse = foundProductBySupplier;
+      } else {
+        console.log('Producto no encontrado, creando uno nuevo');
+        const product = new Product({
+          name,
+          description,
+          price,
+          stock,
+          category,
+          isbn,
+        });
+        const savedProduct = await product.save();
+        productResponse = await Product.findById(savedProduct._id);
+      }
+      const indexFound = supplierFound.products.findIndex(
+        (p) => p._id == productResponse._id
+      );
+      if (indexFound == -1) {
+        supplierFound.products.push(productResponse);
+        await supplierFound.save();
+      }
       res.status(201).json({
         message: 'Producto creado correctamente',
-        data: product,
+        data: productResponse,
       });
     } catch (error) {
       console.log(error);
@@ -54,6 +71,8 @@ class ProductController extends BaseController {
   async updateStock(req, res) {
     try {
       const { quantity } = req.body;
+      if (!quantity)
+        return res.status(400).json({ message: 'Quantity is required' });
       const product = await this.model.findById(req.params.id);
 
       if (!product) {

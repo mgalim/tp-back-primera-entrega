@@ -22,6 +22,26 @@ export const productSchema = z.object({
   supplier: z.string({
     required_error: 'El proveedor es requerido',
   }),
+  isbn: z.string({
+    required_error: 'El ISBN es requerido',
+  }),
+});
+
+export const updateProductSchema = productSchema
+  .omit({
+    stock: true,
+    isNew: true,
+    supplier: true,
+  })
+  .partial();
+
+export const loginSchema = z.object({
+  email: z.string({
+    required_error: 'El email es requerido',
+  }),
+  password: z.string({
+    required_error: 'La contraseña es requerida',
+  }),
 });
 
 export const userSchema = z.object({
@@ -41,8 +61,12 @@ export const userSchema = z.object({
       required_error: 'La contraseña es requerida',
     })
     .min(6, 'La contraseña debe tener al menos 6 caracteres'),
-  role: z.enum(['administrador', 'empleado', 'supervisor']).default('empleado'),
+  role: z
+    .enum(['administrador', 'empleado', 'supervisor', 'cliente'])
+    .default('empleado'),
 });
+
+export const updateUserSchema = userSchema.omit({ password: true }).partial();
 
 export const supplierSchema = z.object({
   name: z.string({

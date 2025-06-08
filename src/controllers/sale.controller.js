@@ -1,12 +1,32 @@
 import BaseController from './base.controller.js';
 import { Sale } from '../models/sale.js';
-
-
+import { User } from '../models/user.js';
+import { Discount } from '../models/discount.js';
 class SaleController extends BaseController {
   constructor() {
-    super(Sale, ['products.product']);
+    super(Sale, ['products.product', 'user']);
   }
 
+  async create(req, res) {
+    try {
+      const { products, customer, user } = req.body;
+      const userFound = await User.findOne({ email: user });
+      const sale = new this.model({
+        products,
+        customer,
+        user: userFound._id ? userFound._id : null,
+      });
+      sale.total = await this.calculateTotal(sale);
+      await sale.save();
+      res.status(201).json({
+        message: 'Venta creada con éxito',
+        sale,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ message: error.message });
+    }
+  }
 
   async getByDate(req, res) {
     try {
@@ -35,7 +55,6 @@ class SaleController extends BaseController {
     }
   }
 
-
   async getTotalSales(req, res) {
     try {
       const sales = await this.model.find();
@@ -47,7 +66,6 @@ class SaleController extends BaseController {
       res.status(500).json({ message: error.message });
     }
   }
-
 
   async getTopProducts(req, res) {
     try {
@@ -79,7 +97,6 @@ class SaleController extends BaseController {
       res.status(500).json({ message: error.message });
     }
   }
-
 
   async getSalesByPeriod(req, res) {
     try {
@@ -124,6 +141,44 @@ class SaleController extends BaseController {
       res.status(200).json(sales);
     } catch (error) {
       res.status(500).json({ message: error.message });
+    }
+  }
+
+  async calculateTotal(sale) {
+    try {
+      let discountF = 0;
+      let subtotal = sale.products.reduce((acc, product) => {
+        return acc + product.quantity * product.price;
+      }, 0);
+
+      if (sale.user) {
+        const discount = await Discount.findOne({
+          user: sale.user,
+        });
+
+        if (discount) {
+          if (discount.accumulated >= 10000) {
+            discountF = discount.discountPercentage || 0;
+            discount.accumulated = 0;
+            await discount.save();
+          } else {
+            discount.accumulated += subtotal;
+            await discount.save();
+          }
+        } else {
+          const newDiscount = new Discount({
+            user: sale.user,
+            discountPercentage: 20,
+            accumulated: subtotal,
+          });
+          await newDiscount.save();
+        }
+      }
+
+      const finalTotal = subtotal - (subtotal * discountF) / 100;
+      return finalTotal;
+    } catch (error) {
+      throw error;
     }
   }
 }
