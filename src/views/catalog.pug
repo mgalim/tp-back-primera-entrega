@@ -41,10 +41,13 @@ html(lang='es')
                       td.text-success= `$${product.price}`
                       td= product.stock
                       td.text-secondary.small= product.description || 'Sin descripción'
-                      td= product.supplier.name
+                      td= product.supplier ? product.supplier.name : 'Sin proveedor'
                       td.small
-                        div= product.supplier.email
-                        div= product.supplier.phone
+                        if product.supplier
+                          div= product.supplier.email
+                          div= product.supplier.phone
+                        else
+                          div.text-secondary.small Sin datos
           else
             .alert.alert-info No hay productos disponibles en esta categoría.
 
