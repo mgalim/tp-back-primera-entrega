@@ -2,6 +2,8 @@ import BaseController from './base.controller.js';
 import { Sale } from '../models/sale.js';
 import { User } from '../models/user.js';
 import { Discount } from '../models/discount.js';
+import { Product } from '../models/product.js';
+
 class SaleController extends BaseController {
   constructor() {
     super(Sale, ['products.product', 'user']);
@@ -10,21 +12,128 @@ class SaleController extends BaseController {
   async create(req, res) {
     try {
       const { products, customer, user } = req.body;
+
+      // Validar que se reciban productos
+      if (!products || !Array.isArray(products) || products.length === 0) {
+        return res.status(400).json({
+          message: 'Se requiere un array de productos válido',
+        });
+      }
+
+      // Buscar usuario por email
       const userFound = await User.findOne({ email: user });
+
+      // Validar stock y recopilar errores antes de procesar la venta
+      const stockErrors = [];
+      const stockValidations = [];
+
+      for (const item of products) {
+        const { product: productId, quantity } = item;
+
+        if (!productId || !quantity || quantity <= 0) {
+          stockErrors.push({
+            productId: productId || 'ID no proporcionado',
+            error: 'ID del producto y cantidad válida requeridos',
+          });
+          continue;
+        }
+
+        // Buscar producto y validar stock
+        const productFound = await Product.findById(productId);
+
+        if (!productFound) {
+          stockErrors.push({
+            productId,
+            error: 'Producto no encontrado',
+          });
+          continue;
+        }
+
+        if (productFound.stock < quantity) {
+          stockErrors.push({
+            productId,
+            productName: productFound.name,
+            error: `Stock insuficiente. Disponible: ${productFound.stock}, Solicitado: ${quantity}`,
+            availableStock: productFound.stock,
+            requestedQuantity: quantity,
+          });
+          continue;
+        }
+
+        // Agregar a validaciones exitosas
+        stockValidations.push({
+          product: productFound,
+          quantity,
+          price: item.price,
+        });
+      }
+
+      // Si hay errores de stock, devolver errores sin procesar la venta
+      if (stockErrors.length > 0) {
+        return res.status(400).json({
+          message: 'Errores de validación de stock',
+          errors: stockErrors,
+          summary: {
+            totalProducts: products.length,
+            validProducts: stockValidations.length,
+            invalidProducts: stockErrors.length,
+          },
+        });
+      }
+
+      // Si todo está validado, proceder con la venta y reducir stock
+      const updatedProducts = [];
+
+      for (const validation of stockValidations) {
+        const { product, quantity, price } = validation;
+
+        // Reducir stock
+        product.stock -= quantity;
+        await product.save();
+
+        // Preparar producto para la venta
+        updatedProducts.push({
+          product: product._id,
+          quantity,
+          price,
+          productName: product.name, // Para referencia
+          remainingStock: product.stock, // Para logging
+        });
+      }
+      console.log(userFound);
+      // Crear la venta
       const sale = new this.model({
-        products,
+        products: products, // Usar los productos originales para la venta
         customer,
-        user: userFound._id ? userFound._id : null,
+        user: userFound?._id || null,
       });
+
+      // Calcular total con descuentos
       sale.total = await this.calculateTotal(sale);
       await sale.save();
+
+      // Respuesta exitosa con información de stock actualizado
       res.status(201).json({
         message: 'Venta creada con éxito',
         sale,
+        stockUpdates: updatedProducts.map((p) => ({
+          productId: p.product,
+          productName: p.productName,
+          quantitySold: p.quantity,
+          remainingStock: p.remainingStock,
+        })),
+        summary: {
+          totalProducts: products.length,
+          totalAmount: sale.total,
+          stockReduced: true,
+        },
       });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: error.message });
+      res.status(400).json({
+        message: 'Error al procesar la venta',
+        error: error.message,
+      });
     }
   }
 
@@ -145,6 +254,7 @@ class SaleController extends BaseController {
   }
 
   async calculateTotal(sale) {
+    console.log(sale);
     try {
       let discountF = 0;
       let subtotal = sale.products.reduce((acc, product) => {
