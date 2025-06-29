@@ -1,8 +1,8 @@
-import BaseController from './base.controller.js';
-import { Sale } from '../models/sale.js';
-import { User } from '../models/user.js';
 import { Discount } from '../models/discount.js';
 import { Product } from '../models/product.js';
+import { Sale } from '../models/sale.js';
+import { User } from '../models/user.js';
+import BaseController from './base.controller.js';
 
 class SaleController extends BaseController {
   constructor() {
@@ -140,7 +140,6 @@ class SaleController extends BaseController {
     try {
       const { startDate, endDate } = req.query;
       const query = {};
-      console.log(startDate, endDate);
       if (startDate && endDate) {
         const start = new Date(startDate);
         const end = new Date(endDate);
@@ -149,7 +148,6 @@ class SaleController extends BaseController {
           return res.status(400).json({ message: 'Fechas inválidas' });
         }
         end.setUTCHours(23, 59, 59, 999);
-        console.log(end);
         query.date = { $gte: start, $lte: end };
       }
 
@@ -253,7 +251,6 @@ class SaleController extends BaseController {
   }
 
   async calculateTotal(sale) {
-    console.log(sale);
     try {
       let discountF = 0;
       let subtotal = sale.products.reduce((acc, product) => {

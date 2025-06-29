@@ -151,12 +151,40 @@ export const seedDatabase = async () => {
         role: 'administrador',
       },
       {
+        name: 'User',
+        lastname: 'Random',
+        email: 'user@libreria.com',
+        password: '$2b$10$lY7nOP8Tw84wHSbUjKH6juKhFIIDZrKkPjk5F4HDzlQUTGR/ql6DK',
+        role: 'cliente',
+      },
+      {
         name: 'Catriel',
         lastname: 'Escobar',
         email: 'catriel.escobar@gmail.com',
         password: '$2b$10$lY7nOP8Tw84wHSbUjKH6juKhFIIDZrKkPjk5F4HDzlQUTGR/ql6DK',
         role: 'cliente',
         _id: '683a4f74d9cef30a6421c632',
+      },
+      {
+        name: 'Marcelo',
+        lastname: 'Galimberti',
+        email: 'marcelo.galimberti@gmail.com',
+        password: '$2b$10$lY7nOP8Tw84wHSbUjKH6juKhFIIDZrKkPjk5F4HDzlQUTGR/ql6DK',
+        role: 'administrador',
+      },
+      {
+        name: 'Gustavo',
+        lastname: 'Baranda',
+        email: 'gustavo.baranda@gmail.com',
+        password: '$2b$10$lY7nOP8Tw84wHSbUjKH6juKhFIIDZrKkPjk5F4HDzlQUTGR/ql6DK',
+        role: 'cliente',
+      },
+      {
+        name: 'Eugenia',
+        lastname: 'Bava',
+        email: 'eugenia.bava@gmail.com',
+        password: '$2b$10$lY7nOP8Tw84wHSbUjKH6juKhFIIDZrKkPjk5F4HDzlQUTGR/ql6DK',
+        role: 'cliente',
       },
     ]);
     console.log('Usuarios creados exitosamente');

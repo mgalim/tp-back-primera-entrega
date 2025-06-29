@@ -672,7 +672,6 @@ html(lang='es')
         h1.main-title 
           i.fas.fa-boxes.me-3
           | Catálogo de Productos
-        p.subtitle Explora nuestra colección completa
 
     // Main content
     .content-wrapper
@@ -817,7 +816,7 @@ html(lang='es')
       let currentProduct = null;
       let currentQuantity = 1;
 
-      // Función para mostrar modal personalizado
+      // Mostrar modal personalizado
       function showCustomModal(type, title, message, buttons = []) {
         const modal = document.getElementById('customModal');
         const icon = document.getElementById('modalIcon');
@@ -867,7 +866,7 @@ html(lang='es')
         setTimeout(() => modal.style.display = 'none', 300);
       }
 
-      // Funciones del modal de venta
+      // Modal de ventas
       function openSaleModal(productId, name, description, price, stock, category) {
         // Verificar que todos los parámetros son válidos
         if (!productId || !name || price === undefined || stock === undefined) {
@@ -1050,7 +1049,7 @@ html(lang='es')
         ]);
       }
 
-      // 🔴 FUNCIÓN PROCESSSALE QUE FALTABA
+      // Procesar ventas
       async function processSale() {
         const customerName = document.getElementById('customerName').value.trim();
         const customerEmail = document.getElementById('customerEmail').value.trim();
@@ -1147,7 +1146,7 @@ html(lang='es')
         }
       }
 
-      // Función para actualizar el stock en la fila del producto
+      // Actualizar el stock en la fila del producto
       function updateProductRowStock(productId, quantitySold) {
         const productRow = document.querySelector(`tr[data-product-id="${productId}"]`);
         if (productRow) {
@@ -1372,7 +1371,7 @@ html(lang='es')
         ]);
       };
 
-      // Función para obtener el descuento del usuario
+      // Obtener el descuento del usuario
       async function getUserDiscount(email) {
         try {
           const response = await fetch(`/users/discount?email=${encodeURIComponent(email)}`, {
@@ -1394,7 +1393,7 @@ html(lang='es')
         }
       }
 
-      // Función para mostrar información de descuento disponible
+      // Mostrar información de descuento disponible
       async function showDiscountInfo(email) {
         if (!email || !validateEmail(email)) return '';
 

@@ -1,4 +1,3 @@
-import { Types } from 'mongoose';
 import { Product } from '../models/product.js';
 import { Supplier } from '../models/supplier.js';
 import BaseController from './base.controller.js';
@@ -23,12 +22,10 @@ class ProductController extends BaseController {
         isbn,
       });
       if (foundProductBySupplier) {
-        console.log('Producto encontrado');
         foundProductBySupplier.stock += stock;
         await foundProductBySupplier.save();
         productResponse = foundProductBySupplier;
       } else {
-        console.log('Producto no encontrado, creando uno nuevo');
         const product = new Product({
           name,
           description,
