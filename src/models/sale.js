@@ -42,30 +42,4 @@ const saleSchema = new mongoose.Schema({
   },
 });
 
-// saleSchema.pre('save', async function () {
-//   let discountF = 0;
-//   // Chequear si  la venta tiene un usuario asociado y si tiene un descuento asociado al usuario
-//   if (this.user) {
-//     try {
-//       const discount = await Discount.findOne({ user: this.user });
-
-//       if (discount) {
-//         discountF = discount.discountPercentage || 0;
-//         discount.isUsed = true;
-//         await discount.save();
-//       }
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
-//   // Aplicando el descuento si existe y si el usuario tiene un descuento asociado al usuario y si el descuento no ha sido use
-//   this.total = this.products.reduce((sum, item) => {
-//     return sum + item.quantity * item.price;
-//   }, 0);
-
-//   if (discountF > 0) {
-//     this.total = this.total * (1 - discountF / 100);
-//   }
-// });
-
 export const Sale = mongoose.model('Sale', saleSchema);

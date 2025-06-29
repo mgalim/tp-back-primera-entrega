@@ -1,7 +1,7 @@
 {
-  "name": "tp-back-primera-entrega",
-  "version": "1.0.0",
-  "description": "Trabaja grupal Back TP1",
+  "name": "tp-back-segunda-entrega",
+  "version": "2.0.0",
+  "description": "Trabaja grupal Back TP2",
   "main": "app.js",
   "type": "module",
   "scripts": {
