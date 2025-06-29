@@ -2,11 +2,11 @@
   "name": "tp-back-segunda-entrega",
   "version": "2.0.0",
   "description": "Trabaja grupal Back TP2",
-  "main": "app.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./src/app.js",
-    "dev": "node --watch ./src/app.js"
+    "start": "node ./src/index.js",
+    "dev": "node --watch ./src/index.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "primer-entrega": "file:",
     "pug": "3.0.3",
     "tp-back-primera-entrega": "file:",
-    "zod": "3.24.4"
+    "zod": "3.24.4",
+    "serverless-http": "^3.0.0"
   }
 }
