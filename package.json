@@ -2,10 +2,9 @@
   "name": "tp-back-segunda-entrega",
   "version": "2.0.0",
   "description": "Trabaja grupal Back TP2",
-  "main": "api/index.js",
   "type": "module",
   "scripts": {
-    "dev": "vercel dev"
+  "start": "node api/index.js"
   },
   "repository": {
     "type": "git",
@@ -30,7 +29,6 @@
     "primer-entrega": "file:",
     "pug": "3.0.3",
     "tp-back-primera-entrega": "file:",
-    "zod": "3.24.4",
-    "serverless-http": "^3.0.0"
+    "zod": "3.24.4"
   }
 }

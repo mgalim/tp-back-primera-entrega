@@ -71,7 +71,7 @@ El servidor se iniciará en el puerto configurado (por defecto: 3050) con recarg
 ```plaintext
 .
 ├── src/
-│   ├── app.js              # Punto de entrada de la aplicación
+│   ├── api/index.js              # Punto de entrada de la aplicación
 │   ├── config/             # Archivos de configuración y passport
 │   ├── controllers/        # Controladores de rutas
 │   ├── models/             # Modelos de base de datos
