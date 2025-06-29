@@ -2,11 +2,11 @@ import cookieParser from 'cookie-parser';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { env } from './config/env.js';
-import { connectDB } from './config/mongo.config.js';
-import passport from './config/passport.js';
-import route from './routes/routes.js';
-import { initializeDatabase } from './utils/init.js';
+import { env } from '../src/config/env.js';
+import { connectDB } from '../src/config/mongo.config.js';
+import passport from '../src/config/passport.js';
+import route from '../src/routes/routes.js';
+import { initializeDatabase } from '../src/utils/init.js';
 const serverless = require('serverless-http');
 
 // Establecer conexión a la base de datos de MongoDb y cargar datos iniciales
