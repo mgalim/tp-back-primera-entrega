@@ -100,7 +100,6 @@ class SaleController extends BaseController {
           remainingStock: product.stock, // Para logging
         });
       }
-
       // Crear la venta
       const sale = new this.model({
         products: products, // Usar los productos originales para la venta
@@ -254,6 +253,7 @@ class SaleController extends BaseController {
   }
 
   async calculateTotal(sale) {
+    console.log(sale);
     try {
       let discountF = 0;
       let subtotal = sale.products.reduce((acc, product) => {
