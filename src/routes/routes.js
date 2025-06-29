@@ -8,16 +8,19 @@ import customerRoutes from './customer.routes.js';
 
 const router = express.Router();
 
-// Ruta principal
+// Ruta principal - DEBE MANTENERSE PÚBLICA
 router.get('/', (req, res) => {
   res.render('home');
 });
 
-// Montar las rutas
+// Rutas de autenticación - PÚBLICAS
+router.use('/auth', authRoutes);
+
+// Rutas protegidas
 router.use('/products', productRoutes);
 router.use('/sales', saleRoutes);
 router.use('/suppliers', supplierRoutes);
 router.use('/users', userRoutes);
-router.use('/auth', authRoutes);
 router.use('/customer', customerRoutes);
+
 export default router;

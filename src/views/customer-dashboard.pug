@@ -1,53 +1,701 @@
-extends layouts/main
+doctype html
+html(lang='es')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Dashboard Cliente - Rompiendo Códigos
+    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css', rel='stylesheet')
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap', rel='stylesheet')
+    style.
+      :root {
+        --primary-color: #4caf50;
+        --primary-dark: #388e3c;
+        --secondary-color: #2c3e50;
+        --accent-color: #00bcd4;
+        --bg-dark: #0a0a0a;
+        --bg-card: #ffffff;
+        --text-primary: #2c3e50;
+        --text-secondary: #666666;
+        --text-light: #ffffff;
+        --border-color: #e0e0e0;
+        --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.15);
+      }
 
-block styles
-  style.
-    .dashboard-container {
-      padding: 2rem;
-    }
-    .progress {
-      height: 25px;
-    }
-    .card {
-      background: rgba(26, 71, 42, 0.9);
-      border: none;
-    }
-    .product-card {
-      transition: transform 0.2s;
-    }
-    .product-card:hover {
-      transform: translateY(-5px);
-    }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-block content
-  .dashboard-container
-    h1.text-center.mb-4 Bienvenido a tu panel de cliente
-    
-    if discount
-      .card.mb-4
-        .card-body
-          h5.card-title Progreso de descuento
-          .progress.mb-2
-            .progress-bar.bg-success(
-              role='progressbar'
-              style=`width: ${(discount.accumulated / 10000) * 100}%`
-              aria-valuenow=discount.accumulated
-              aria-valuemin='0'
-              aria-valuemax='10000'
-            )
-          .d-flex.justify-content-between
-            small $#{discount.accumulated} Acumulado
-            small $#{10000 - discount.accumulated} Para conseguir un 20% de descuento
+      body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        color: var(--text-primary);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
 
-    .row.row-cols-1.row-cols-md-3.g-4.mt-4
-      each product in products
-        .col
-          .card.product-card.h-100
-            .card-body
-              h5.card-title.text-white= product.name
-              p.card-text.text-light= product.description
-              .d-flex.justify-content-between.align-items-center
-                h6.text-success $#{product.price}
-                span.badge.bg-info= `Stock: ${product.stock}`
+      .logout-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      .btn-logout {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        border: none;
+        border-radius: 50px;
+        padding: 12px 24px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        color: white;
+      }
+
+      .btn-logout:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+        background: linear-gradient(135deg, #c82333, #a71e2a);
+        color: white;
+      }
+
+      .header-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        padding: 60px 0 40px;
+        position: relative;
+        margin-bottom: 40px;
+        box-shadow: var(--shadow);
+      }
+
+      .main-title {
+        font-size: 3rem;
+        font-weight: 700;
+        text-align: center;
+        margin: 0;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        color: white;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+        margin-top: 10px;
+      }
+
+      .content-wrapper {
+        padding: 0 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .sidebar {
+        background: var(--bg-card);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+      }
+
+      .sidebar-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .progress-card {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+        border: 1px solid rgba(76, 175, 80, 0.3);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .progress {
+        height: 15px;
+        border-radius: 25px;
+        background: rgba(76, 175, 80, 0.1);
+        overflow: hidden;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .progress-bar {
+        background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+        border-radius: 25px;
+        transition: width 1s ease-in-out;
+      }
+
+      .progress-info {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+
+      .progress-info .current {
+        color: var(--primary-color);
+        font-weight: 600;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .stat-item {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 12px;
+        text-align: center;
+        border: 1px solid var(--border-color);
+      }
+
+      .stat-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .products-section {
+        background: var(--bg-card);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+        min-height: 500px;
+      }
+
+      .products-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .products-header h2 {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .products-count {
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        background: rgba(76, 175, 80, 0.1);
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1px solid rgba(76, 175, 80, 0.3);
+        font-weight: 500;
+      }
+
+      .product-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow);
+        height: 100%;
+        position: relative;
+      }
+
+      .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-hover);
+        border-color: var(--primary-color);
+      }
+
+      .product-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .product-card:hover::before {
+        opacity: 1;
+      }
+
+      .card-body {
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 10px;
+        line-height: 1.3;
+      }
+
+      .card-text {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        flex-grow: 1;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+
+      .card-footer-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 15px;
+        border-top: 1px solid var(--border-color);
+        margin-top: auto;
+      }
+
+      .card-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+      }
+
+      .card-category {
+        background: linear-gradient(135deg, var(--accent-color), #0097a7);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .stock-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .stock-high {
+        background: rgba(76, 175, 80, 0.2);
+        color: var(--primary-color);
+        border: 1px solid rgba(76, 175, 80, 0.3);
+      }
+
+      .stock-medium {
+        background: rgba(255, 193, 7, 0.2);
+        color: #f57c00;
+        border: 1px solid rgba(255, 193, 7, 0.3);
+      }
+
+      .stock-low {
+        background: rgba(220, 53, 69, 0.2);
+        color: #dc3545;
+        border: 1px solid rgba(220, 53, 69, 0.3);
+      }
+
+      .no-products {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-secondary);
+      }
+
+      .no-products i {
+        font-size: 4rem;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+      }
+
+      .no-products h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: var(--text-primary);
+      }
+
+      /* Modal personalizado */
+      .custom-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--border-color);
+        transform: scale(0.7);
+        transition: transform 0.3s ease;
+      }
+
+      .custom-modal.show .modal-content {
+        transform: scale(1);
+      }
+
+      .modal-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+      }
+
+      .modal-icon.warning {
+        color: #ffc107;
+      }
+
+      .modal-icon.success {
+        color: var(--primary-color);
+      }
+
+      .modal-icon.error {
+        color: #dc3545;
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: var(--text-primary);
+      }
+
+      .modal-message {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin-bottom: 30px;
+        line-height: 1.5;
+      }
+
+      .modal-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+      }
+
+      .modal-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 100px;
+      }
+
+      .modal-btn-primary {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+      }
+
+      .modal-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+      }
+
+      .modal-btn-danger {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+      }
+
+      .modal-btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(220, 53, 69, 0.3);
+      }
+
+      .modal-btn-secondary {
+        background: #f8f9fa;
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+      }
+
+      .modal-btn-secondary:hover {
+        background: #e9ecef;
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 768px) {
+        .main-title {
+          font-size: 2rem;
+        }
+        
+        .sidebar {
+          margin-bottom: 30px;
+          position: static;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .products-header {
+          flex-direction: column;
+          gap: 15px;
+          align-items: flex-start;
+        }
+
+        .modal-content {
+          padding: 30px 20px;
+        }
+
+        .modal-buttons {
+          flex-direction: column;
+        }
+
+        .btn-logout {
+          padding: 10px 20px;
+          font-size: 0.9rem;
+        }
+      }
+
+  body
+    // Botón de cierre de sesión
+    .logout-btn
+      button#logoutBtn.btn.btn-logout.text-white(type='button') 
+        i.fas.fa-sign-out-alt.me-2
+        | Cerrar Sesión
+
+    // Header section
+    .header-section
+      .container
+        h1.main-title 
+          i.fas.fa-user-circle.me-3
+          | Dashboard Cliente
+        p.subtitle Tu espacio personalizado
+
+    // Main content
+    .content-wrapper
+      .row.g-4
+        // Sidebar con información del usuario
+        .col-lg-3.col-md-4
+          .sidebar
+            h3.sidebar-title
+              i.fas.fa-chart-line
+              | Mi progreso
+            
+            if discount
+              .progress-card
+                h6.mb-3
+                  i.fas.fa-percentage.me-2
+                  | Descuento acumulado
+                .progress.mb-3
+                  .progress-bar(
+                    role='progressbar'
+                    style=`width: ${Math.min((discount.accumulated / 10000) * 100, 100)}%`
+                    aria-valuenow=discount.accumulated
+                    aria-valuemin='0'
+                    aria-valuemax='10000'
+                  )
+                .progress-info
+                  span.current $#{discount.accumulated.toLocaleString()}
+                  span $#{(10000 - discount.accumulated).toLocaleString()} restantes
+                
+                if discount.accumulated >= 10000
+                  .alert.alert-success.mt-3.text-center
+                    i.fas.fa-gift.me-2
+                    strong ¡20% de descuento disponible!
+                else
+                  .text-center.mt-2
+                    small.text-muted Para obtener 20% de descuento
+            
+            .stats-grid
+              .stat-item
+                .stat-number #{products ? products.length : 0}
+                .stat-label Productos disponibles
+              .stat-item
+                .stat-number 
+                  if discount && discount.accumulated >= 10000
+                    | 20%
+                  else
+                    | 0%
+                .stat-label Descuento actual
+
+        // Sección de productos
+        .col-lg-9.col-md-8
+          .products-section
+            .products-header
+              h2.m-0
+                i.fas.fa-shopping-bag.me-2
+                | Productos disponibles
+              .products-count
+                i.fas.fa-cubes.me-1
+                | #{products ? products.length : 0} productos encontrados
+            
+            if products && products.length
+              .row.row-cols-1.row-cols-md-2.row-cols-lg-3.g-4
+                each product in products
+                  .col
+                    .card.product-card.h-100
+                      //- .stock-badge(class=product.stock < 10 ? 'stock-low' : product.stock < 50 ? 'stock-medium' : 'stock-high')
+                      //-   //- i.fas.fa-box.me-1
+                      //-   //- | #{product.stock}
+                      .card-body
+                        h5.card-title= product.name
+                        p.card-text= product.description || 'Sin descripción disponible'
+                        .card-footer-info
+                          .card-price $#{product.price.toLocaleString()}
+                          .card-category= product.category
+            else
+              .no-products
+                i.fas.fa-shopping-cart
+                h3 No hay productos disponibles
+                p Actualmente no tenemos productos en el inventario.
+
+    // Modal personalizado
+    .custom-modal#customModal
+      .modal-content
+        .modal-icon#modalIcon
+        .modal-title#modalTitle
+        .modal-message#modalMessage
+        .modal-buttons#modalButtons
 
     script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js')
+    script.
+      // Función para mostrar modal personalizado
+      function showCustomModal(type, title, message, buttons = []) {
+        const modal = document.getElementById('customModal');
+        const icon = document.getElementById('modalIcon');
+        const titleElement = document.getElementById('modalTitle');
+        const messageElement = document.getElementById('modalMessage');
+        const buttonsContainer = document.getElementById('modalButtons');
+
+        icon.className = 'modal-icon';
+        switch(type) {
+          case 'warning':
+            icon.className += ' warning';
+            icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+            break;
+          case 'success':
+            icon.className += ' success';
+            icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            break;
+          case 'error':
+            icon.className += ' error';
+            icon.innerHTML = '<i class="fas fa-times-circle"></i>';
+            break;
+        }
+
+        titleElement.textContent = title;
+        messageElement.textContent = message;
+
+        buttonsContainer.innerHTML = '';
+
+        buttons.forEach(button => {
+          const btn = document.createElement('button');
+          btn.className = `modal-btn modal-btn-${button.type}`;
+          btn.textContent = button.text;
+          btn.onclick = () => {
+            hideCustomModal();
+            if (button.action) button.action();
+          };
+          buttonsContainer.appendChild(btn);
+        });
+
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('show'), 10);
+      }
+
+      function hideCustomModal() {
+        const modal = document.getElementById('customModal');
+        modal.classList.remove('show');
+        setTimeout(() => modal.style.display = 'none', 300);
+      }
+
+      const handleLogout = async () => {
+        showCustomModal('warning', 'Confirmar cierre de sesión', 
+          '¿Estás seguro de que quieres cerrar sesión?', [
+          {
+            text: 'Cancelar',
+            type: 'secondary',
+            action: null
+          },
+          {
+            text: 'Cerrar Sesión',
+            type: 'danger',
+            action: async () => {
+              try {
+                const response = await fetch('/auth/logout', {
+                  method: 'POST',
+                  credentials: 'include',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
+                });
+                
+                if (response.ok) {
+                  localStorage.clear();
+                  sessionStorage.clear();
+                  window.location.href = '/auth/login';
+                } else {
+                  showCustomModal('error', 'Error', 
+                    'Error al cerrar sesión. Inténtalo de nuevo.', [
+                    {
+                      text: 'Entendido',
+                      type: 'primary',
+                      action: null
+                    }
+                  ]);
+                }
+              } catch (error) {
+                console.error('Error during logout:', error);
+                showCustomModal('error', 'Error de conexión', 
+                  'Error al cerrar sesión. Verifica tu conexión e inténtalo de nuevo.', [
+                  {
+                    text: 'Entendido',
+                    type: 'primary',
+                    action: null
+                  }
+                ]);
+              }
+            }
+          }
+        ]);
+      };
+
+      document.getElementById('customModal').addEventListener('click', (e) => {
+        if (e.target.id === 'customModal') {
+          hideCustomModal();
+        }
+      });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+      });

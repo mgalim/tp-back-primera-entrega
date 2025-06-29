@@ -3,52 +3,1477 @@ html(lang='es')
   head
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    title Catálogo de Productos
+    title Catálogo de Productos - Rompiendo Códigos
     link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css', rel='stylesheet')
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap', rel='stylesheet')
+    style.
+      :root {
+        --primary-color: #4caf50;
+        --primary-dark: #388e3c;
+        --secondary-color: #2c3e50;
+        --accent-color: #00bcd4;
+        --bg-dark: #0a0a0a;
+        --bg-card: #ffffff;
+        --text-primary: #2c3e50;
+        --text-secondary: #666666;
+        --text-light: #ffffff;
+        --border-color: #e0e0e0;
+        --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.15);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        color: var(--text-primary);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .logout-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      .btn-logout {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        border: none;
+        border-radius: 50px;
+        padding: 12px 24px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        color: white;
+      }
+
+      .btn-logout:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+        background: linear-gradient(135deg, #c82333, #a71e2a);
+        color: white;
+      }
+
+      .header-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        padding: 60px 0 40px;
+        position: relative;
+        margin-bottom: 40px;
+        box-shadow: var(--shadow);
+      }
+
+      .main-title {
+        font-size: 3rem;
+        font-weight: 700;
+        text-align: center;
+        margin: 0;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        color: white;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+        margin-top: 10px;
+      }
+
+      .content-wrapper {
+        padding: 0 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .categories-sidebar {
+        background: var(--bg-card);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+      }
+
+      .categories-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .category-item {
+        display: block;
+        padding: 15px 20px;
+        margin-bottom: 8px;
+        background: #f8f9fa;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .category-item:hover {
+        background: rgba(76, 175, 80, 0.1);
+        border-color: var(--primary-color);
+        color: var(--text-primary);
+        transform: translateX(5px);
+        text-decoration: none;
+      }
+
+      .category-item.active {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        border-color: var(--primary-color);
+        color: white;
+        font-weight: 600;
+      }
+
+      .products-section {
+        background: var(--bg-card);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+        min-height: 500px;
+      }
+
+      .products-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .products-header h2 {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .products-count {
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        background: rgba(76, 175, 80, 0.1);
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1px solid rgba(76, 175, 80, 0.3);
+        font-weight: 500;
+      }
+
+      .table-container {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+      }
+
+      .table {
+        background: var(--bg-card);
+        margin: 0;
+        border: none;
+      }
+
+      .table thead th {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        font-weight: 600;
+        padding: 20px 15px;
+        border: none;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .table tbody tr {
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+      }
+
+      .table tbody tr:hover {
+        background: rgba(76, 175, 80, 0.05);
+      }
+
+      .table tbody td {
+        padding: 20px 15px;
+        border: none;
+        color: var(--text-primary);
+        vertical-align: middle;
+        font-weight: 500;
+      }
+
+      .price-cell {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--primary-color) !important;
+      }
+
+      .stock-cell {
+        font-weight: 600;
+      }
+
+      .stock-low {
+        color: #dc3545;
+      }
+
+      .stock-medium {
+        color: #ffc107;
+      }
+
+      .stock-high {
+        color: var(--primary-color);
+      }
+
+      .category-badge {
+        background: linear-gradient(135deg, var(--accent-color), #0097a7);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .description-cell {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--text-secondary) !important;
+      }
+
+      .btn-buy {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        border: none;
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        color: white;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-width: 100px;
+      }
+
+      .btn-buy:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+        background: linear-gradient(135deg, var(--primary-dark), #2e7d32);
+      }
+
+      .btn-buy:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .no-products {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-secondary);
+      }
+
+      .no-products i {
+        font-size: 4rem;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+      }
+
+      .no-products h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: var(--text-primary);
+      }
+
+      /* Modal de venta */
+      .sale-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+      }
+
+      .sale-modal-content {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        max-width: 600px;
+        width: 90%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--border-color);
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .sale-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .sale-modal-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .close-btn:hover {
+        background: #f8f9fa;
+        color: var(--text-primary);
+      }
+
+      .product-info {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 25px;
+        border: 1px solid var(--border-color);
+      }
+
+      .product-info h4 {
+        color: var(--text-primary);
+        margin-bottom: 10px;
+      }
+
+      .product-info p {
+        color: var(--text-secondary);
+        margin-bottom: 10px;
+      }
+
+      .product-price {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-color);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+      }
+
+      .quantity-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .quantity-btn {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .quantity-btn:hover {
+        background: var(--primary-dark);
+        transform: scale(1.1);
+      }
+
+      .quantity-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .quantity-input {
+        width: 80px;
+        text-align: center;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        padding: 8px;
+        font-weight: 600;
+      }
+
+      .sale-summary {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+        border: 1px solid rgba(76, 175, 80, 0.3);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 25px;
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      .summary-row:last-child {
+        border-top: 1px solid rgba(76, 175, 80, 0.3);
+        padding-top: 10px;
+        margin-top: 15px;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-end;
+      }
+
+      .btn-modal {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 120px;
+      }
+
+      .btn-modal-success {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+      }
+
+      .btn-modal-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+      }
+
+      .btn-modal-secondary {
+        background: #f8f9fa;
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+      }
+
+      .btn-modal-secondary:hover {
+        background: #e9ecef;
+      }
+
+      /* Modal personalizado */
+      .custom-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--border-color);
+        transform: scale(0.7);
+        transition: transform 0.3s ease;
+      }
+
+      .custom-modal.show .modal-content {
+        transform: scale(1);
+      }
+
+      .modal-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+      }
+
+      .modal-icon.warning {
+        color: #ffc107;
+      }
+
+      .modal-icon.success {
+        color: var(--primary-color);
+      }
+
+      .modal-icon.error {
+        color: #dc3545;
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: var(--text-primary);
+      }
+
+      .modal-message {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin-bottom: 30px;
+        line-height: 1.5;
+      }
+
+      .modal-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+      }
+
+      .modal-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 100px;
+      }
+
+      .modal-btn-primary {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+      }
+
+      .modal-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+      }
+
+      .modal-btn-danger {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+      }
+
+      .modal-btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(220, 53, 69, 0.3);
+      }
+
+      .modal-btn-secondary {
+        background: #f8f9fa;
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+      }
+
+      .modal-btn-secondary:hover {
+        background: #e9ecef;
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 768px) {
+        .main-title {
+          font-size: 2rem;
+        }
+        
+        .categories-sidebar {
+          margin-bottom: 30px;
+          position: static;
+        }
+        
+        .table-container {
+          overflow-x: auto;
+        }
+        
+        .description-cell {
+          max-width: 150px;
+        }
+
+        .sale-modal-content {
+          padding: 20px;
+          margin: 20px;
+        }
+
+        .modal-actions {
+          flex-direction: column;
+        }
+
+        .modal-content {
+          padding: 30px 20px;
+        }
+
+        .modal-buttons {
+          flex-direction: column;
+        }
+      }
 
   body
-    .container
-      h1.text-center.my-4 Catálogo de Productos
+    // Botón de cierre de sesión
+    .logout-btn
+      button#logoutBtn.btn.btn-logout.text-white(type='button') 
+        i.fas.fa-sign-out-alt.me-2
+        | Cerrar Sesión
 
-      .row
-        //- Sidebar de categorías
-        .col-md-3.mb-4
-          .list-group
-            a.list-group-item.list-group-item-action(class=!currentCategory ? 'active' : '', href='/products/catalog') Todas las Categorías
-            a.list-group-item.list-group-item-action(class=currentCategory === 'libro' ? 'active' : '', href='?category=libro') Libros
-            a.list-group-item.list-group-item-action(class=currentCategory === 'revista' ? 'active' : '', href='?category=revista') Revistas
-            a.list-group-item.list-group-item-action(class=currentCategory === 'articulo' ? 'active' : '', href='?category=articulo') Artículos
+    // Header section
+    .header-section
+      .container
+        h1.main-title 
+          i.fas.fa-boxes.me-3
+          | Catálogo de Productos
+        p.subtitle Explora nuestra colección completa
 
-        //- Tabla de productos
-        .col-md-9
-          if products.length
-            .table-responsive
-              table.table.table-hover.table-bordered
-                thead.table-light
-                  tr
-                    th Nombre
-                    th Categoría
-                    th Precio
-                    th Stock
-                    th Descripción
-                    //- th Proveedor
-                    //- th Contacto
-                tbody
-                  each product in products
+    // Main content
+    .content-wrapper
+      .row.g-4
+        // Sidebar de categorías
+        .col-lg-3.col-md-4
+          .categories-sidebar
+            h3.categories-title
+              i.fas.fa-filter
+              | Categorías
+            .category-list
+              a.category-item(class=!currentCategory ? 'active' : '', href='/products/catalog')
+                i.fas.fa-th-large.me-2
+                | Todas las Categorías
+              a.category-item(class=currentCategory === 'libro' ? 'active' : '', href='?category=libro')
+                i.fas.fa-book.me-2
+                | Libros
+              a.category-item(class=currentCategory === 'revista' ? 'active' : '', href='?category=revista')
+                i.fas.fa-newspaper.me-2
+                | Revistas
+              a.category-item(class=currentCategory === 'articulo' ? 'active' : '', href='?category=articulo')
+                i.fas.fa-file-alt.me-2
+                | Artículos
+
+        // Sección de productos
+        .col-lg-9.col-md-8
+          .products-section
+            .products-header
+              h2.m-0
+                i.fas.fa-inventory.me-2
+                | Productos
+                if currentCategory
+                  span.text-muted.ms-2 / #{currentCategory}
+              .products-count
+                i.fas.fa-cubes.me-1
+                | #{products.length} productos encontrados
+            
+            if products.length
+              .table-container
+                table.table.table-hover
+                  thead
                     tr
-                      td= product.name
-                      td= product.category
-                      td.text-success= `$${product.price}`
-                      td= product.stock
-                      td.text-secondary.small= product.description || 'Sin descripción'
-                      //- td= product.supplier ? product.supplier.name : 'Sin proveedor'
-                      //- td.small
-                      //-   if product.supplier
-                      //-     div= product.supplier.email
-                      //-     div= product.supplier.phone
-                      //-   else
-                      //-     div.text-secondary.small Sin datos
-          else
-            .alert.alert-info No hay productos disponibles en esta categoría.
+                      th
+                        i.fas.fa-tag.me-2
+                        | Nombre
+                      th
+                        i.fas.fa-folder.me-2
+                        | Categoría
+                      th
+                        i.fas.fa-dollar-sign.me-2
+                        | Precio
+                      th
+                        i.fas.fa-warehouse.me-2
+                        | Stock
+                      th
+                        i.fas.fa-info-circle.me-2
+                        | Descripción
+                      th
+                        i.fas.fa-shopping-cart.me-2
+                        | Acción
+                  tbody
+                    each product in products
+                      tr(data-product-id=product._id)
+                        td
+                          strong= product.name
+                        td
+                          span.category-badge= product.category
+                        td.price-cell= `$${product.price.toLocaleString()}`
+                        td.stock-cell(class=product.stock < 10 ? 'stock-low' : product.stock < 50 ? 'stock-medium' : 'stock-high')
+                          i.fas.fa-box.me-1
+                          span.stock-quantity #{product.stock}
+                          |  unidades
+                        td.description-cell(title=product.description || 'Sin descripción')
+                          = product.description || 'Sin descripción'
+                        td
+                          button.btn-buy(
+                            type='button'
+                            onclick=`openSaleModal('${product._id}', '${product.name}', '${product.description || 'Sin descripción'}', ${product.price}, ${product.stock}, '${product.category}')`
+                            disabled=product.stock <= 0
+                          )
+                            i.fas.fa-shopping-cart.me-1
+                            | #{product.stock > 0 ? 'Vender' : 'Sin Stock'}
+            else
+              .no-products
+                i.fas.fa-inbox
+                h3 No hay productos disponibles
+                p En esta categoría no se encontraron productos.
+
+    // Modal de venta
+    .sale-modal#saleModal
+      .sale-modal-content
+        .sale-modal-header
+          h3.sale-modal-title
+            i.fas.fa-shopping-cart.me-2
+            | Realizar Venta
+          button.close-btn(onclick='closeSaleModal()')
+            i.fas.fa-times
+        
+        .product-info#productInfo
+          // Contenido dinámico del producto
+        
+        .form-group
+          label.form-label(for='customerName') Nombre del Cliente
+          input.form-control#customerName(type='text', placeholder='Ingrese su nombre', required)
+        
+        .form-group
+          label.form-label(for='customerEmail') Email del Cliente
+          input.form-control#customerEmail(type='email', placeholder='Ingrese su email', required)
+        
+        .form-group
+          label.form-label Cantidad
+          .quantity-controls
+            button.quantity-btn(type='button', onclick='decreaseQuantity()')
+              i.fas.fa-minus
+            input.quantity-input#quantity(type='number', value='1', min='1', readonly)
+            button.quantity-btn(type='button', onclick='increaseQuantity()')
+              i.fas.fa-plus
+        
+        .sale-summary#saleSummary
+          .summary-row
+            span Subtotal:
+            span#subtotal $0
+          .summary-row
+            span Total:
+            span#total $0
+        
+        .modal-actions
+          button.btn-modal.btn-modal-secondary(onclick='closeSaleModal()') Cancelar
+          button.btn-modal.btn-modal-success#confirmSaleBtn(onclick='confirmSale()') Confirmar Venta
+
+    // Modal personalizado
+    .custom-modal#customModal
+      .modal-content
+        .modal-icon#modalIcon
+        .modal-title#modalTitle
+        .modal-message#modalMessage
+        .modal-buttons#modalButtons
 
     script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js')
+    script.
+      // Variables globales
+      let currentProduct = null;
+      let currentQuantity = 1;
+
+      // Función para mostrar modal personalizado
+      function showCustomModal(type, title, message, buttons = []) {
+        const modal = document.getElementById('customModal');
+        const icon = document.getElementById('modalIcon');
+        const titleElement = document.getElementById('modalTitle');
+        const messageElement = document.getElementById('modalMessage');
+        const buttonsContainer = document.getElementById('modalButtons');
+
+        icon.className = 'modal-icon';
+        switch(type) {
+          case 'warning':
+            icon.className += ' warning';
+            icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+            break;
+          case 'success':
+            icon.className += ' success';
+            icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            break;
+          case 'error':
+            icon.className += ' error';
+            icon.innerHTML = '<i class="fas fa-times-circle"></i>';
+            break;
+        }
+
+        titleElement.textContent = title;
+        messageElement.textContent = message;
+
+        buttonsContainer.innerHTML = '';
+
+        buttons.forEach(button => {
+          const btn = document.createElement('button');
+          btn.className = `modal-btn modal-btn-${button.type}`;
+          btn.textContent = button.text;
+          btn.onclick = () => {
+            hideCustomModal();
+            if (button.action) button.action();
+          };
+          buttonsContainer.appendChild(btn);
+        });
+
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('show'), 10);
+      }
+
+      function hideCustomModal() {
+        const modal = document.getElementById('customModal');
+        modal.classList.remove('show');
+        setTimeout(() => modal.style.display = 'none', 300);
+      }
+
+      // Funciones del modal de venta
+      function openSaleModal(productId, name, description, price, stock, category) {
+        // Verificar que todos los parámetros son válidos
+        if (!productId || !name || price === undefined || stock === undefined) {
+          showCustomModal('error', 'Error de datos', 
+            'Los datos del producto están incompletos. Recargue la página e inténtelo nuevamente.', [
+            {
+              text: 'Recargar página',
+              type: 'primary',
+              action: () => window.location.reload()
+            }
+          ]);
+          return;
+        }
+
+        currentProduct = {
+          id: productId,
+          name: name,
+          description: description || 'Sin descripción',
+          price: price,
+          stock: stock,
+          category: category || 'Sin categoría'
+        };
+
+        // Actualizar información del producto
+        document.getElementById('productInfo').innerHTML = `
+          <h4>${currentProduct.name}</h4>
+          <p>${currentProduct.description}</p>
+          <p><strong>Categoría:</strong> ${currentProduct.category}</p>
+          <p><strong>Stock disponible:</strong> ${currentProduct.stock} unidades</p>
+          <div class="product-price">$${currentProduct.price.toLocaleString()}</div>
+        `;
+
+        // Resetear cantidad
+        currentQuantity = 1;
+        document.getElementById('quantity').value = 1;
+        document.getElementById('quantity').max = currentProduct.stock;
+
+        // Actualizar resumen
+        updateSaleSummary();
+
+        // Mostrar modal
+        document.getElementById('saleModal').style.display = 'flex';
+        
+        console.log('Modal abierto con producto:', currentProduct);
+      }
+
+      function closeSaleModal() {
+        document.getElementById('saleModal').style.display = 'none';
+        currentProduct = null;
+        currentQuantity = 1;
+        
+        // Limpiar formulario
+        document.getElementById('customerName').value = '';
+        document.getElementById('customerEmail').value = '';
+      }
+
+      function increaseQuantity() {
+        if (currentQuantity < currentProduct.stock) {
+          currentQuantity++;
+          document.getElementById('quantity').value = currentQuantity;
+          updateSaleSummary();
+        }
+      }
+
+      function decreaseQuantity() {
+        if (currentQuantity > 1) {
+          currentQuantity--;
+          document.getElementById('quantity').value = currentQuantity;
+          updateSaleSummary();
+        }
+      }
+
+      async function updateSaleSummary() {
+        if (!currentProduct) return;
+
+        const subtotal = currentProduct.price * currentQuantity;
+        let discount = 0;
+        let discountAmount = 0;
+        let total = subtotal;
+
+        // Obtener el email del cliente para verificar descuentos
+        const customerEmail = document.getElementById('customerEmail').value.trim();
+        
+        if (customerEmail && validateEmail(customerEmail)) {
+          const userDiscount = await getUserDiscount(customerEmail);
+          if (userDiscount && userDiscount.accumulated >= 10000) {
+            discount = userDiscount.discountPercentage || 20; // 20% por defecto
+            discountAmount = (subtotal * discount) / 100;
+            total = subtotal - discountAmount;
+          }
+        }
+
+        // Actualizar el HTML del resumen
+        const summaryHTML = `
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span id="subtotal">$${subtotal.toLocaleString()}</span>
+          </div>
+          ${discount > 0 ? `
+            <div class="summary-row" style="color: var(--primary-color);">
+              <span>Descuento (${discount}%):</span>
+              <span>-$${discountAmount.toLocaleString()}</span>
+            </div>
+          ` : ''}
+          <div class="summary-row">
+            <span>Total:</span>
+            <span id="total">$${total.toLocaleString()}</span>
+          </div>
+        `;
+
+        document.getElementById('saleSummary').innerHTML = summaryHTML;
+      }
+
+      async function confirmSale() {
+        const customerName = document.getElementById('customerName').value.trim();
+        const customerEmail = document.getElementById('customerEmail').value.trim();
+
+        if (!customerName || !customerEmail) {
+          showCustomModal('error', 'Datos incompletos', 
+            'Por favor, complete todos los campos requeridos.', [
+            {
+              text: 'Entendido',
+              type: 'primary',
+              action: null
+            }
+          ]);
+          return;
+        }
+
+        if (!validateEmail(customerEmail)) {
+          showCustomModal('error', 'Email inválido', 
+            'Por favor, ingrese un email válido.', [
+            {
+              text: 'Entendido',
+              type: 'primary',
+              action: null
+            }
+          ]);
+          return;
+        }
+
+        if (!currentProduct) {
+          showCustomModal('error', 'Error interno', 
+            'Se perdieron los datos del producto. Por favor, cierre el modal y vuelva a intentar.', [
+            {
+              text: 'Entendido',
+              type: 'primary',
+              action: closeSaleModal
+            }
+          ]);
+          return;
+        }
+
+        // Calcular total con descuentos
+        const subtotal = currentProduct.price * currentQuantity;
+        let total = subtotal;
+        let discountText = '';
+
+        const userDiscount = await getUserDiscount(customerEmail);
+        if (userDiscount && userDiscount.accumulated >= 10000) {
+          const discount = userDiscount.discountPercentage || 20;
+          const discountAmount = (subtotal * discount) / 100;
+          total = subtotal - discountAmount;
+          discountText = ` (con ${discount}% de descuento: -$${discountAmount.toLocaleString()})`;
+        }
+
+        // Confirmar la venta antes de procesar
+        showCustomModal('warning', 'Confirmar venta', 
+          `¿Confirmar venta de ${currentQuantity} unidad(es) de "${currentProduct.name}"?\n\nSubtotal: $${subtotal.toLocaleString()}${discountText}\nTotal: $${total.toLocaleString()}`, [
+          {
+            text: 'Cancelar',
+            type: 'secondary',
+            action: null
+          },
+          {
+            text: 'Confirmar',
+            type: 'primary',
+            action: processSale
+          }
+        ]);
+      }
+
+      // 🔴 FUNCIÓN PROCESSSALE QUE FALTABA
+      async function processSale() {
+        const customerName = document.getElementById('customerName').value.trim();
+        const customerEmail = document.getElementById('customerEmail').value.trim();
+
+        // Guardar datos del producto antes de que se pierdan
+        const productData = {
+          id: currentProduct.id,
+          name: currentProduct.name,
+          description: currentProduct.description,
+          price: currentProduct.price,
+          stock: currentProduct.stock,
+          category: currentProduct.category
+        };
+        
+        const saleQuantity = currentQuantity;
+
+        const saleData = {
+          products: [{
+            product: productData.id,
+            quantity: saleQuantity,
+            price: productData.price
+          }],
+          customer: {
+            name: customerName,
+            email: customerEmail
+          },
+          user: customerEmail
+        };
+
+        try {
+          // Mostrar loading
+          showCustomModal('warning', 'Procesando venta...', 
+            'Por favor espere mientras procesamos su venta.', []);
+
+          const response = await fetch('/sales', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(saleData)
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            // Actualizar el stock en la tabla usando los datos guardados
+            updateProductRowStock(productData.id, saleQuantity);
+            
+            // Cerrar el modal de venta primero
+            closeSaleModal();
+            
+            // Luego mostrar el modal de éxito usando los datos guardados
+            showCustomModal('success', 'Venta realizada exitosamente!', 
+              `Su venta se procesó correctamente.\n\nDetalles:\n• Producto: ${productData.name}\n• Cantidad: ${saleQuantity}\n• Total: $${result.sale.total.toLocaleString()}\n\nEl stock se ha actualizado automáticamente.`, [
+                {
+                  text: 'Continuar vendiendo',
+                  type: 'primary',
+                  action: () => window.location.reload()
+                }
+            ]);
+          } else {
+            let errorMessage = 'No se pudo procesar la venta.';
+            
+            if (result.errors && Array.isArray(result.errors)) {
+              errorMessage = result.errors.map(error => {
+                if (error.availableStock !== undefined) {
+                  return `Stock insuficiente. Disponible: ${error.availableStock}, Solicitado: ${error.requestedQuantity}`;
+                }
+                return error.error || error.message;
+              }).join('\n');
+            } else if (result.message) {
+              errorMessage = result.message;
+            }
+
+            showCustomModal('error', 'Error en la venta', errorMessage, [
+              {
+                text: 'Entendido',
+                type: 'primary',
+                action: null
+              }
+            ]);
+          }
+        } catch (error) {
+          console.error('Error en la venta:', error);
+          showCustomModal('error', 'Error de conexión', 
+            'No se pudo conectar con el servidor. Verifica tu conexión e inténtalo nuevamente.', [
+            {
+              text: 'Entendido',
+              type: 'primary',
+              action: null
+            }
+          ]);
+        }
+      }
+
+      // Función para actualizar el stock en la fila del producto
+      function updateProductRowStock(productId, quantitySold) {
+        const productRow = document.querySelector(`tr[data-product-id="${productId}"]`);
+        if (productRow) {
+          const stockCell = productRow.querySelector('.stock-cell');
+          const stockQuantitySpan = productRow.querySelector('.stock-quantity');
+          const buyButton = productRow.querySelector('.btn-buy');
+          
+          if (stockQuantitySpan) {
+            // Obtener el stock actual
+            const currentStock = parseInt(stockQuantitySpan.textContent);
+            const newStock = Math.max(0, currentStock - quantitySold);
+            
+            // Actualizar el texto del stock
+            stockQuantitySpan.textContent = newStock;
+            
+            // Actualizar la clase CSS del stock cell según el nuevo stock
+            stockCell.className = 'stock-cell';
+            if (newStock < 10) {
+              stockCell.classList.add('stock-low');
+            } else if (newStock < 50) {
+              stockCell.classList.add('stock-medium');
+            } else {
+              stockCell.classList.add('stock-high');
+            }
+            
+            // Actualizar el botón de venta si no hay stock
+            if (buyButton) {
+              if (newStock <= 0) {
+                buyButton.disabled = true;
+                buyButton.innerHTML = '<i class="fas fa-shopping-cart me-1"></i>Sin Stock';
+                buyButton.removeAttribute('onclick');
+              } else {
+                buyButton.disabled = false;
+                buyButton.innerHTML = '<i class="fas fa-shopping-cart me-1"></i>Vender';
+                
+                // Obtener datos actualizados de la fila para el onclick
+                const productName = productRow.querySelector('td:first-child strong').textContent;
+                const productCategory = productRow.querySelector('.category-badge').textContent;
+                const productPriceText = productRow.querySelector('.price-cell').textContent;
+                const productPrice = parseInt(productPriceText.replace(/\D/g, ''));
+                const productDescription = productRow.querySelector('.description-cell').title || 'Sin descripción';
+                
+                // Actualizar el onclick con los datos actualizados
+                buyButton.setAttribute('onclick', 
+                  `openSaleModal('${productId}', '${productName}', '${productDescription}', ${productPrice}, ${newStock}, '${productCategory}')`
+                );
+              }
+            }
+          }
+        }
+      }
+
+      // Función para abrir el modal de venta
+      function openSaleModal(productId, name, description, price, stock, category) {
+        // Verificar que todos los parámetros son válidos
+        if (!productId || !name || price === undefined || stock === undefined) {
+          showCustomModal('error', 'Error de datos', 
+            'Los datos del producto están incompletos. Recargue la página e inténtelo nuevamente.', [
+            {
+              text: 'Recargar página',
+              type: 'primary',
+              action: () => window.location.reload()
+            }
+          ]);
+          return;
+        }
+
+        currentProduct = {
+          id: productId,
+          name: name,
+          description: description || 'Sin descripción',
+          price: price,
+          stock: stock,
+          category: category || 'Sin categoría'
+        };
+
+        // Actualizar información del producto
+        document.getElementById('productInfo').innerHTML = `
+          <h4>${currentProduct.name}</h4>
+          <p>${currentProduct.description}</p>
+          <p><strong>Categoría:</strong> ${currentProduct.category}</p>
+          <p><strong>Stock disponible:</strong> ${currentProduct.stock} unidades</p>
+          <div class="product-price">$${currentProduct.price.toLocaleString()}</div>
+        `;
+
+        // Resetear cantidad
+        currentQuantity = 1;
+        document.getElementById('quantity').value = 1;
+        document.getElementById('quantity').max = currentProduct.stock;
+
+        // Actualizar resumen
+        updateSaleSummary();
+
+        // Mostrar modal
+        document.getElementById('saleModal').style.display = 'flex';
+        
+        console.log('Modal abierto con producto:', currentProduct);
+      }
+
+      function closeSaleModal() {
+        console.log('Cerrando modal de venta');
+        document.getElementById('saleModal').style.display = 'none';
+        currentProduct = null;
+        currentQuantity = 1;
+        
+        // Limpiar formulario
+        document.getElementById('customerName').value = '';
+        document.getElementById('customerEmail').value = '';
+      }
+
+      function increaseQuantity() {
+        if (currentQuantity < currentProduct.stock) {
+          currentQuantity++;
+          document.getElementById('quantity').value = currentQuantity;
+          updateSaleSummary();
+        }
+      }
+
+      function decreaseQuantity() {
+        if (currentQuantity > 1) {
+          currentQuantity--;
+          document.getElementById('quantity').value = currentQuantity;
+          updateSaleSummary();
+        }
+      }
+
+      async function updateSaleSummary() {
+        if (!currentProduct) return;
+
+        const subtotal = currentProduct.price * currentQuantity;
+        let discount = 0;
+        let discountAmount = 0;
+        let total = subtotal;
+
+        // Obtener el email del cliente para verificar descuentos
+        const customerEmail = document.getElementById('customerEmail').value.trim();
+        
+        if (customerEmail && validateEmail(customerEmail)) {
+          const userDiscount = await getUserDiscount(customerEmail);
+          if (userDiscount && userDiscount.accumulated >= 10000) {
+            discount = userDiscount.discountPercentage || 20; // 20% por defecto
+            discountAmount = (subtotal * discount) / 100;
+            total = subtotal - discountAmount;
+          }
+        }
+
+        // Actualizar el HTML del resumen
+        const summaryHTML = `
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span id="subtotal">$${subtotal.toLocaleString()}</span>
+          </div>
+          ${discount > 0 ? `
+            <div class="summary-row" style="color: var(--primary-color);">
+              <span>Descuento (${discount}%):</span>
+              <span>-$${discountAmount.toLocaleString()}</span>
+            </div>
+          ` : ''}
+          <div class="summary-row">
+            <span>Total:</span>
+            <span id="total">$${total.toLocaleString()}</span>
+          </div>
+        `;
+
+        document.getElementById('saleSummary').innerHTML = summaryHTML;
+      }
+
+      function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+      }
+
+      // Función para cerrar sesión
+      const handleLogout = async () => {
+        showCustomModal('warning', 'Confirmar cierre de sesión', 
+          '¿Estás seguro de que quieres cerrar sesión?', [
+          {
+            text: 'Cancelar',
+            type: 'secondary',
+            action: null
+          },
+          {
+            text: 'Cerrar Sesión',
+            type: 'danger',
+            action: async () => {
+              try {
+                const response = await fetch('/auth/logout', {
+                  method: 'POST',
+                  credentials: 'include',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
+                });
+                
+                if (response.ok) {
+                  localStorage.clear();
+                  sessionStorage.clear();
+                  window.location.href = '/auth/login';
+                } else {
+                  showCustomModal('error', 'Error', 
+                    'Error al cerrar sesión. Inténtalo de nuevo.', [
+                    {
+                      text: 'Entendido',
+                      type: 'primary',
+                      action: null
+                    }
+                  ]);
+                }
+              } catch (error) {
+                console.error('Error during logout:', error);
+                showCustomModal('error', 'Error de conexión', 
+                  'Error al cerrar sesión. Verifica tu conexión e inténtalo de nuevo.', [
+                  {
+                    text: 'Entendido',
+                    type: 'primary',
+                    action: null
+                  }
+                ]);
+              }
+            }
+          }
+        ]);
+      };
+
+      // Función para obtener el descuento del usuario
+      async function getUserDiscount(email) {
+        try {
+          const response = await fetch(`/users/discount?email=${encodeURIComponent(email)}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+
+          if (response.ok) {
+            const discount = await response.json();
+            return discount;
+          }
+          return null;
+        } catch (error) {
+          console.error('Error obteniendo descuento:', error);
+          return null;
+        }
+      }
+
+      // Función para mostrar información de descuento disponible
+      async function showDiscountInfo(email) {
+        if (!email || !validateEmail(email)) return '';
+
+        const userDiscount = await getUserDiscount(email);
+        if (!userDiscount) return '';
+
+        if (userDiscount.accumulated >= 10000) {
+          return `
+            <div class="alert alert-success mt-3">
+              <i class="fas fa-gift me-2"></i>
+              <strong>¡Descuento disponible!</strong> Tienes un ${userDiscount.discountPercentage || 20}% de descuento en esta venta.
+            </div>
+          `;
+        } else {
+          const remaining = 10000 - userDiscount.accumulated;
+          return `
+            <div class="alert alert-info mt-3">
+              <i class="fas fa-info-circle me-2"></i>
+              Te faltan $${remaining.toLocaleString()} para obtener un 20% de descuento en futuras ventas.
+            </div>
+          `;
+        }
+      }
+
+      // Event listeners
+      document.getElementById('customModal').addEventListener('click', (e) => {
+        if (e.target.id === 'customModal') {
+          hideCustomModal();
+        }
+      });
+
+      document.getElementById('saleModal').addEventListener('click', (e) => {
+        if (e.target.id === 'saleModal') {
+          closeSaleModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (document.getElementById('saleModal').style.display === 'flex') {
+            closeSaleModal();
+          }
+          if (document.getElementById('customModal').style.display === 'flex') {
+            hideCustomModal();
+          }
+        }
+      });
+
+      // Inicialización
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+        
+        // Event listener para email - actualizar descuentos cuando se ingrese un email válido
+        document.getElementById('customerEmail').addEventListener('blur', async (e) => {
+          const email = e.target.value.trim();
+          if (email && validateEmail(email)) {
+            await updateSaleSummary();
+          }
+        });
+        
+        document.getElementById('quantity').addEventListener('change', (e) => {
+          const value = parseInt(e.target.value);
+          if (value >= 1 && value <= currentProduct?.stock) {
+            currentQuantity = value;
+            updateSaleSummary();
+          } else {
+            e.target.value = currentQuantity;
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          if (e.target.closest('.quantity-btn')) {
+            const increaseBtn = document.querySelector('.quantity-controls .quantity-btn:last-child');
+            const decreaseBtn = document.querySelector('.quantity-controls .quantity-btn:first-child');
+            
+            if (currentProduct) {
+              increaseBtn.disabled = currentQuantity >= currentProduct.stock;
+              decreaseBtn.disabled = currentQuantity <= 1;
+            }
+          }
+        });
+      });
