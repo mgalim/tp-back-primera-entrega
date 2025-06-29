@@ -100,7 +100,6 @@ class SaleController extends BaseController {
           remainingStock: product.stock, // Para logging
         });
       }
-      console.log(userFound);
       // Crear la venta
       const sale = new this.model({
         products: products, // Usar los productos originales para la venta
