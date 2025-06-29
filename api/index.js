@@ -1,7 +1,6 @@
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import path from 'path';
-import serverless from 'serverless-http';
 import { fileURLToPath } from 'url';
 import { env } from '../src/config/env.js';
 import { connectDB } from '../src/config/mongo.config.js';
@@ -30,9 +29,9 @@ app.use(passport.initialize());
 // Setear las rutas
 app.use('/', route);
 
-export const handler = serverless(app);
-
-// // Iniciar el servidor
+// Iniciar el servidor
 // app.listen(env.PORT, () => {
 //   console.log(`Server is running on http://localhost:${env.PORT}`);
 // });
+
+export default app;
