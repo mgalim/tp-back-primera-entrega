@@ -32,6 +32,7 @@ app.use('/', route);
 
 export const handler = serverless(app);
 
+
 // // Iniciar el servidor
 // app.listen(env.PORT, () => {
 //   console.log(`Server is running on http://localhost:${env.PORT}`);
