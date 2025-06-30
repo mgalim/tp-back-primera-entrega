@@ -1,12 +1,21 @@
 import mongoose from 'mongoose';
 
-// Funcion basica para conectar a MongoDB utilizando Mongoose
+let cachedConnection = null;
+
 export const connectDB = async (url) => {
+  if (cachedConnection) {
+    return cachedConnection;
+  }
+
   try {
-    await mongoose.connect(url);
+    const connection = await mongoose.connect(url, {
+      maxPoolSize: 10,
+    });
+    cachedConnection = connection;
     console.log('Connected to MongoDB');
+    return connection;
   } catch (error) {
-    console.log(error);
+    console.error('MongoDB connection error:', error);
     process.exit(1);
   }
 };

@@ -1,10 +1,12 @@
 {
   "name": "tp-back-segunda-entrega",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Trabaja grupal Back TP2",
   "type": "module",
   "scripts": {
-    "start": "node api/index.js"
+    "dev": "node --watch ./src/app.js",
+    "start": "node ./src/app.js",
+    "build": "npm install"
   },
   "repository": {
     "type": "git",
@@ -18,15 +20,14 @@
   },
   "homepage": "https://github.com/mgalim/tp-back-primera-entrega#readme",
   "dependencies": {
-    "bcrypt": "^6.0.0",
-    "cookie-parser": "^1.4.7",
+    "bcrypt": "6.0.0",
+    "cookie-parser": "1.4.7",
     "dotenv": "16.5.0",
     "express": "5.1.0",
-    "jsonwebtoken": "^9.0.2",
+    "jsonwebtoken": "9.0.2",
     "mongoose": "8.15.0",
-    "passport": "^0.7.0",
-    "passport-jwt": "^4.0.1",
-    "primer-entrega": "file:",
+    "passport": "0.7.0",
+    "passport-jwt": "4.0.1",
     "pug": "3.0.3",
     "tp-back-primera-entrega": "file:",
     "zod": "3.24.4"
