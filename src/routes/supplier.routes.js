@@ -1,8 +1,8 @@
 import express from 'express';
 import supplierController from '../controllers/supplier.controller.js';
+import { authenticate, authorize } from '../middleware/auth.middleware.js';
 import { validateSchema } from '../middleware/validation.middleware.js';
 import { supplierSchema } from '../validations/schemas.js';
-import { authenticate, authorize } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
