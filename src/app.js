@@ -29,6 +29,6 @@ app.use(passport.initialize());
 // Rutas
 app.use('/', route);
 
-// app.listen(env.PORT, () => {
-//   console.log(`Server is running on http://localhost:${env.PORT}`);
-// });
+app.listen(env.PORT, () => {
+  console.log(`Server is running on http://localhost:${env.PORT}`);
+});
